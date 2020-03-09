@@ -1,8 +1,9 @@
 import './SearchResults.css';
 import React from 'react';
 
-const SearchResults = ({ courses }) => {
-  if (!courses || courses.length === 0) {
+
+const SearchResults = ({courses}) => {
+  if (!courses || !courses.length) {
     return (
       <div className='no-results-container'>
         <h3>Sorry . . . We could not find anything</h3>
