@@ -1,0 +1,9 @@
+.services h1{
+    text-align: center;
+}
+.goalsOptions{
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+
+}
