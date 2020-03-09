@@ -1,0 +1,73 @@
+.results-container {
+  display: block;
+  margin-top: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.results-container img {
+  max-width: 240px;
+  max-height: 135px;
+}
+
+.results-container a {
+  text-decoration: none;
+  color: black;
+}
+
+.results-container ul {
+  list-style: none;
+}
+
+.results-container li {
+  padding: 10px;
+  margin: 3px;
+  border-top: #c3c3c3 2px solid;
+  display: flex;
+  height: 180px;
+
+}
+
+.results-container h2 {
+  font-size: 1.1rem;
+}
+
+.description {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+
+}
+
+.description h3 {
+  font-size: 1rem;
+  color: #333
+}
+
+.udemy-link {
+  padding: 4px;
+  height: 5rem;
+  width: 12rem;
+  background-color: #ea5250;
+  border-radius: 5px;
+  color: white;
+}
+
+.statistics {
+  color: #a1a1a1
+}
+
+.no-results-container {
+  margin: 1rem auto;
+  border-top: #c3c3c3 2px solid;
+  width: 90%;
+}
+
+.no-results-container h3 {
+  font-size: 1.2rem;
+  color: #222;
+}
