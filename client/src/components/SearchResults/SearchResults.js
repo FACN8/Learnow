@@ -23,7 +23,7 @@ import React from 'react';
 //   ];
 
 const SearchResults = ({courses}) => {
-  if (!courses || courses.length === 0) {
+  if (!courses || !courses.length) {
     return (
     <div className='no-results-container'>
       <br></br><br></br>
