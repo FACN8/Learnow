@@ -4,9 +4,6 @@ import SearchResults from '../SearchResults/SearchResults';
 import Spinner from '../Spinner/Spinner';
 import get from '../../utils/axiosGet';
 
-// import dontenv from 'dotenv';
-
-// dontenv.config('../../../.env');
 const Search = props => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
