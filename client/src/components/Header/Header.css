@@ -2,10 +2,15 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+a {
+    text-decoration: none;
+}
 .header{
     display: flex;
-    
+    justify-content: space-between;
+    align-items: center;
+    width: 98vw;
+    height: 14vh;
 }
 .webLogo{
     width: 10vw;
@@ -30,14 +35,13 @@
     color: white;
     border: none;
     cursor: pointer;
-    padding: 1.5vh 0;
+    padding: 1.9vh 0;
     border-radius: 5px;
 }
 .loginButton{
     color: #1D74D5;
     font-size: 2em;
     font-weight: 1000;
-    margin-top: 3vh;
     margin-left: auto;
     cursor: pointer;
 }
@@ -48,9 +52,16 @@
     color: white;
     font-size: 23px;
     font-weight: bolder;
-    margin-top: 3vh;
     margin-left: 4vw;
     cursor: pointer;
     border-radius: 5px;
 }
 
+@media screen and (max-width: 500px) { 
+   .joinNowButton {
+       font-size: 14px;
+   }
+   .loginButton{
+    font-size: 1.2em;
+}
+}
