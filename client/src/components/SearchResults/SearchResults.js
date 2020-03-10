@@ -1,8 +1,8 @@
 import './SearchResults.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-
-const SearchResults = ({courses}) => {
+const SearchResults = ({ courses }) => {
   if (!courses || !courses.length) {
     return (
       <div className='no-results-container'>
@@ -13,11 +13,13 @@ const SearchResults = ({courses}) => {
 
   const results = courses.map(course => (
     <li key={course.id}>
-      <img src={course.image_240x135} />
+      <Link course={course} to='/coursePage'>
+        <img src={course.image_240x135} />
+      </Link>
       <div className='description'>
-        <a href={course.url}>
+        <Link course={course} to='/coursePage'>
           <h2>{course.title}</h2>
-        </a>
+        </Link>
         <h3>{course.headline}</h3>
         <span className='statistics'>
           Lectures: {course.num_lectures} ·· Students: {course.num_subscribers}

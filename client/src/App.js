@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
 import Header from './components/Header/Header';
@@ -12,8 +8,7 @@ import WebDescription from './components/WebDescription/WebDescription';
 import OurServices from './components/OurServices/OurServices';
 import SearchResults from './components/SearchResults/SearchResults';
 import Search from './components/Search/Search';
-import CoursePage from './pages/CoursePage'
-
+import CoursePage from './pages/CoursePage';
 
 const courses = [
   {
@@ -40,19 +35,17 @@ const courses = [
 function App() {
   return (
     <div>
-    <Router>
-    <Header/>
-          <Switch>
-            <Route path="/coursePage">
-              <CoursePage />
-            </Route>
-            <Route path="/">
-              <WebDescription/>
-              <OurServices/>
-            </Route>
-          </Switch>
-        </Router>
-
+      <Router>
+        <Header />
+        <Switch>
+          <Route path='/search/:term/' component={Search} />
+          <Route path='/coursePage' component={CoursePage} />
+          <Route path='/'>
+            <WebDescription />
+            <OurServices />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

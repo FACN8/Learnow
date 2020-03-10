@@ -19,8 +19,10 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
+        "arrow-parens":"off"
     }
 };
