@@ -10,10 +10,6 @@ const checkResponse = response => {
 const axiosGet = url => {
   axios.defaults.withCredentials = true;
   const config = {
-    auth: {
-      eUDm3bEwAKm4dyWgqkpSYyQ8jO65brGosjQacoTL:
-        'KFDud8Cx8NjV94oivRsy4fCqnuwEDN8qaVrvfBs4ZaB2m98m2UNG9snMsmu9pa8yKOoOnbdHI00tRKBSiR2Uyo4AFGb8J5Y1pr24liIVKOsMiGRlpNUXpIBznAxKV1GI',
-    },
     headers: {
       Accept: 'application/json, text/plain, */*',
       Authorization: `Basic ${process.env.REACT_APP_AUTH}`,
