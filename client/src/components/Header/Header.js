@@ -6,9 +6,9 @@ function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
-      return '';
+      return;
     }
-    return `/search/${searchTerm}`;
+    return `/search/${searchTerm.trim()}`;
   };
 
   return (
