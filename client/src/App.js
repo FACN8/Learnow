@@ -38,7 +38,7 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route path='/search/:term/' component={Search} />
+          <Route path='/search/:term/:page' component={Search} />
           <Route path='/coursePage' component={CoursePage} />
           <Route path='/'>
             <WebDescription />
