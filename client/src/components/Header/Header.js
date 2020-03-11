@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Header.css';
 
 import { Link, Redirect } from 'react-router-dom';
@@ -10,10 +10,7 @@ function Header() {
     }
     return `/search/${searchTerm}`;
   };
-  const [searchEnter, setsearchEnter] = useState(false);
-    // useEffect(() => {
-      
-    // }, [searchTerm]);
+
   return (
     <section className='header'>
       <div style={{ display: 'flex' }}>
@@ -43,10 +40,10 @@ function Header() {
         </div>
       </div>
       <div>
-        <Link to={'/loginPage'}>
+        <Link to='/loginPage'>
           <span className='loginButton'>Login</span>
         </Link>
-        <Link to={'/registerPage'}>
+        <Link to='/registerPage'>
           <span className='joinNowButton'>Join now</span>
         </Link>
       </div>

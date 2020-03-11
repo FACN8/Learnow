@@ -1,3 +1,4 @@
+
 import './Search.css';
 import React, { useState, useEffect } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
