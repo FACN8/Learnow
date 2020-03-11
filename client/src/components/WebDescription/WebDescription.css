@@ -38,7 +38,7 @@
 }
 
 .description-under-header h1{
-  margin-top:20vh;
+  margin-top:25vh;
   text-align: center;
   font-size: 19px;
 }
@@ -52,7 +52,8 @@
 
 .joinForFree{
   background-color: white;
-  padding:5vh 7vw;
+  padding:5vh 4vw;
+  width: 20rem;
   color: #1D74D5;
   font-size: 30px;
   font-weight: 1000;
@@ -63,5 +64,12 @@
 @media screen and (max-width: 650px) {
   .joinForFree{
     display:none;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .content p {
+    font-size: 1rem;
+    font-weight:900;
   }
 }
