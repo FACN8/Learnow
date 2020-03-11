@@ -33,6 +33,12 @@
     top: 10rem;
     left: 22rem;
 }
+.courseURL{
+    font-size: 0.9rem;
+    position:absolute; 
+    top: 13rem;
+    left: 5rem;
+}
 .courseImage{
     position:absolute; 
     bottom:0;

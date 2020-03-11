@@ -1,6 +1,7 @@
 import React from 'react';
-// import './coursePage.css';
-import SelectedCoursePage from '../components/SelectedCoursePage/SelectedCoursePage';
+
+import SelectedCourse from '../components/SelectedCourse/SelectedCourse';
+
 
 
 function CoursePage({ course }) {

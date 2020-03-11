@@ -16,7 +16,7 @@ a {
     width: 10vw;
     height:15vh;
     min-width: 10vw;
-    max-height: 15vh;
+    min-height: 2rem;
 }
 .searchBar{
     margin-top: 4vh;
