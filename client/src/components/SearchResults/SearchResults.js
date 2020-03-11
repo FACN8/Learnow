@@ -19,8 +19,8 @@ const SearchResults = ({
       pages.push(i);
     }
     return pages.map(index => (
-      <li key={index}>
-        <h5 className="page-number" onClick={() => setPage(index)}>
+      <li onClick={() => setPage(index)} key={index}>
+        <h5 className="page-number" >
           {index}
         </h5>
       </li>
