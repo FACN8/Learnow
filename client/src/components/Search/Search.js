@@ -11,7 +11,6 @@ const Search = props => {
   const [term, setTerm] = useState(props.match.params.term);
   const reqTime = React.useRef(0);
   const apiBase = 'https://www.udemy.com/api-2.0';
-  console.log(term);
   useEffect(() => { setTerm(props.match.params.term); }, [props.match.params]);
   useEffect(() => {
     reqTime.current = new Date();
@@ -25,7 +24,6 @@ const Search = props => {
         setSearchResult(res);
       })
       .catch(err => {
-        console.log(err);
         setError(err);
       });
   }, [term]);

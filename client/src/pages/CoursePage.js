@@ -4,7 +4,6 @@ import SelectedCoursePage from '../components/SelectedCoursePage/SelectedCourseP
 
 
 function CoursePage({ course }) {
-  console.log(this.course);
   return (
     <div>
     <SelectedCoursePage id = {1} title = {course.title}

@@ -12,9 +12,6 @@ const fetchGet = url => {
     'Content-Type': 'application/json;charset=utf-8',
   });
   const config = {
-    // mode: 'no-cors',
-    // credentials: 'include',
-    // origin: 'https://github.com/FACN8/Learnow',
     headers: myHeaders,
   };
   const newReq = new Request(url, config);
