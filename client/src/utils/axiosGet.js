@@ -8,7 +8,6 @@ const checkResponse = response => {
   return response;
 };
 const axiosGet = url => {
-  axios.defaults.withCredentials = true;
   const config = {
     headers: {
       Accept: 'application/json, text/plain, */*',

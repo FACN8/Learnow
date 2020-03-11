@@ -1,8 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-import { Link } from 'react-router-dom';
-
+import { Link, Redirect } from 'react-router-dom';
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const handleLink = () => {
@@ -11,6 +10,7 @@ function Header() {
     }
     return `/search/${searchTerm}`;
   };
+
   return (
     <section className='header'>
       <div style={{ display: 'flex' }}>
@@ -21,6 +21,11 @@ function Header() {
         <div className='searchBar'>
           <input
             onChange={e => setSearchTerm(e.target.value)}
+            onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  window.location = handleLink()
+                }
+              }}
             className='searchInput'
             type='text'
             placeholder='Search for a course'
@@ -35,10 +40,10 @@ function Header() {
         </div>
       </div>
       <div>
-        <Link to={'/'}>
+        <Link to='/loginPage'>
           <span className='loginButton'>Login</span>
         </Link>
-        <Link to={'/'}>
+        <Link to='/registerPage'>
           <span className='joinNowButton'>Join now</span>
         </Link>
       </div>
@@ -47,3 +52,4 @@ function Header() {
 }
 
 export default Header;
+
