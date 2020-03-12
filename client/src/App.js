@@ -9,6 +9,10 @@ import OurServices from './components/OurServices/OurServices';
 import SearchResults from './components/SearchResults/SearchResults';
 import Search from './components/Search/Search';
 import CoursePage from './pages/CoursePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ResetPassword from './components/ResetPassword/ResetPassword';
+
 
 const courses = [
   {
@@ -40,6 +44,9 @@ function App() {
         <Switch>
           <Route path='/search/:term/' component={Search} />
           <Route path='/coursePage' component={CoursePage} />
+          <Route path='/LoginPage' component={LoginPage} />
+          <Route path='/RegisterPage' component={RegisterPage} />
+          <Route path='/ResetPassword' component={ResetPassword} />
           <Route path='/'>
             <WebDescription />
             <OurServices />
