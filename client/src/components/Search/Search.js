@@ -1,4 +1,3 @@
-
 import './Search.css';
 import React, { useState, useEffect } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
@@ -13,8 +12,13 @@ const Search = props => {
   const [page, setPage] = useState(+props.match.params.page);
   const reqTime = React.useRef(0);
   const apiBase = 'https://www.udemy.com/api-2.0';
-  useEffect(() => { setTerm(props.match.params.term); }, [props.match.params.term]);
-  useEffect(() => { setPage(props.match.params.page); }, [props.match.params.page]);
+  useEffect(() => {
+    setSearchResult(null);
+    setLoading(true);
+    setTerm(props.match.params.term);
+    setPage(+props.match.params.page);
+  }, [props.match.params.term, props.match.params.page]);
+
   useEffect(() => {
     reqTime.current = new Date();
     const URL = `https://cors-anywhere.herokuapp.com/${apiBase}/courses/?search=${term}&page=${page}&page_size=50`;
@@ -31,12 +35,18 @@ const Search = props => {
       });
   }, [term, page]);
 
-
   if (error) return <h2>Unexpected error happened..</h2>;
 
   if (loading) return Spinner();
   if (searchResult) {
-    return <SearchResults time={reqTime.current} data={searchResult.data} setPage={setPage} page={page}/>;
+    return (
+      <SearchResults
+        time={reqTime.current}
+        data={searchResult.data}
+        setPage={setPage}
+        page={page}
+      />
+    );
   }
   return Spinner();
 };

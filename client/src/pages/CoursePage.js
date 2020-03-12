@@ -5,7 +5,6 @@ import SelectedCourse from '../components/SelectedCourse/SelectedCourse';
 
 function CoursePage({ state, setState }) {
   const course = state.selectedCourse;
-  console.log(course);
   return (
     <div>
     <SelectedCourse id = {1} title = {course.title}

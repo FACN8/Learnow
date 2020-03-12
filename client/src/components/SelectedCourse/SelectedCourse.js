@@ -10,7 +10,6 @@ function SelectedCourse({
   num_lectures, num_subscribers, state, setState,
 }) {
   window.onbeforeunload = () => {
-    console.log('backed');
     setState({ ...state, selectedCourse: null });
   };
   return (

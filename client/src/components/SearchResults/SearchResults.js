@@ -13,26 +13,13 @@ const SearchResults = ({
 
   const { courses } = state;
 
-  const buildPageUrls = numberOfPages => {
-    const pages = [];
-    for (let i = 1; i <= numberOfPages; i++) {
-      pages.push(i);
-    }
-    return pages.map(index => (
-      <li onClick={() => setPage(index)} key={index}>
-        <h5 className="page-number" >
-          {index}
-        </h5>
-      </li>
+  const buildPageUrls = numberOfPages => Array(numberOfPages)
+    .fill(null)
+    .map((_, index) => (
+        <li onClick={() => setPage(index + 1)} key={index + 1}>
+          <h5 className="page-number">{index + 1}</h5>
+        </li>
     ));
-  };
-
-  // const pageNav = direction => setPage(page => {
-  //   if (direction === 'prev' && page < 1) return page;
-  //   if (direction === 'next' && page > Math.floor(data.count / 50)) { return page; }
-
-  //   return direction === 'next' ? page + 1 : page - 1;
-  // });
 
   useEffect(() => {
     setState(prevState => ({ ...prevState, courses: data.results }));
@@ -78,22 +65,15 @@ const SearchResults = ({
         <ul className="page-nav">
           <li
             key="prev"
-            onClick={() => setPage(page => {
-              console.log(page);
-              if (page <= 1) return page;
-              return +page - 1;
-            })}
+            onClick={() => setPage(page => (page <= 1 ? page : +page - 1))}
           >
             {'<'}
           </li>
           {buildPageUrls(10)}
           <li
             key="next"
-            onClick={() => setPage(page => {
-              console.log(page);
-              if (page >= Math.floor(data.count / 50)) return page;
-              return +page + 1;
-            })}
+            onClick={() => setPage(page => (page >= Math.floor(data.count / 50) ? page : +page + 1))
+            }
           >
             {'>'}
           </li>
