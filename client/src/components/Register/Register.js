@@ -96,7 +96,7 @@ function Register() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="I Agree to Privacy Policy "
               />
             </Grid>
           </Grid>
@@ -111,7 +111,7 @@ function Register() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/Login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

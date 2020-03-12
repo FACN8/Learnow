@@ -7,9 +7,7 @@ import {
 
 function SelectedCourse({ state, setState,
 }) { 
-  window.onbeforeunload = () => {
-    setState({ ...state, selectedCourse: null });
-  };
+
   let fullURL = `https://www.udemy.com`+state.selectedCourse.url
   console.log("state" ,state.selectedCourse);
   return (

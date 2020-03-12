@@ -40,10 +40,10 @@ function Header() {
         </div>
       </div>
       <div>
-        <Link to='/LoginPage'>
+        <Link to='/Login'>
           <span className='loginButton'>Login</span>
         </Link>
-        <Link to='/RegisterPage'>
+        <Link to='/Register'>
           <span className='joinNowButton'>Join now</span>
         </Link>
       </div>
