@@ -2,13 +2,14 @@ import React from 'react';
 import './Header.css';
 
 import { Link, Redirect } from 'react-router-dom';
+
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
       return;
     }
-    return `/search/${searchTerm.trim()}`;
+    return `/search/${searchTerm.trim()}/1`;
   };
 
   return (
@@ -22,10 +23,10 @@ function Header() {
           <input
             onChange={e => setSearchTerm(e.target.value)}
             onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  window.location = handleLink()
-                }
-              }}
+              if (event.key === 'Enter') {
+                window.location = handleLink();
+              }
+            }}
             className='searchInput'
             type='text'
             placeholder='Search for a course'
@@ -52,4 +53,3 @@ function Header() {
 }
 
 export default Header;
-
