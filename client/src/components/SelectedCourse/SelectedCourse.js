@@ -5,23 +5,24 @@ import {
   Link,
 } from 'react-router-dom';
 
-function SelectedCourse({
-  id, title, headline, url, image,
-  num_lectures, num_subscribers, state, setState,
-}) {
+function SelectedCourse({ state, setState,
+}) { 
   window.onbeforeunload = () => {
     setState({ ...state, selectedCourse: null });
   };
+
+  let fullURL = `https://www.udemy.com`+state.selectedCourse.url
+
   return (
     <div>
       <div className="greyBackGround">
-        <h2 className="courseTitle">{title}</h2>
-        <h3 className="courseDesc">{headline}</h3>
-        <h4 className="courseLects">{num_lectures} lectures for this course</h4>
-        <h4 className="courseSubs">{num_subscribers} students enrolled in this course</h4>
-        <h4 className="courseURL">Visit course page on udemy <a style={{ color: 'wheat ' }} href={url}>HERE</a>.</h4>
-        <img className="courseImage" src={image}/>
-        <h3 onClick={() => setState({ ...state, selectedCourse: null })}>Return to result</h3>
+        <img onClick={() => setState({ ...state, selectedCourse: null })} 
+          className="backIcon" src='/res/backIcon.png'/>
+        <h2 className="courseTitle">{state.selectedCourse.title}</h2>
+        <h3 className="courseDesc">{state.selectedCourse.headline}</h3>
+        <h4 className="coursePrice">{state.selectedCourse.price} the price for this course</h4>
+        <h4 className="courseURL">Visit course page on udemy <a style={{ color: 'wheat ' }} href={fullURL}>HERE</a>.</h4>
+        <img className="courseImage" src={state.selectedCourse.image_240x135}/>
       </div>
 
     </div>
