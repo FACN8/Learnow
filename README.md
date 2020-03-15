@@ -1,6 +1,8 @@
 # Learnow 
 By: @LogicX1 , @ayasm199 
 
+![](https://i.imgur.com/w0m4FcY.png)
+
 ### Your journey for learning, build new skills with groups of self learners, join a group and be part of the community
 
 ---
