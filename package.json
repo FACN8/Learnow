@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd server"
+    "build": "cd server",
+    "start": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
