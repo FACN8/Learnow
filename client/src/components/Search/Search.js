@@ -21,7 +21,9 @@ const Search = props => {
 
   useEffect(() => {
     reqTime.current = new Date();
-    let URL = `https://cors-anywhere.herokuapp.com/${apiBase}/courses/?search=${term}&page=${page}&page_size=50`;
+    // let URL = `https://cors-anywhere.herokuapp.com/${apiBase}/courses/?search=${term}&page=${page}&page_size=50`;
+    let URL = `https://learnow-be.herokuapp.com/getcourses/?search=${term}&page=${page}&page_size=50`;
+
     if (window.location.hostname.includes('localhost')) {
       URL = `http://localhost:5000/getcourses/?search=${term}&page=${page}&page_size=50`;
     }
