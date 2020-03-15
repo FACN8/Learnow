@@ -1,11 +1,12 @@
-const app = module.exports = require ('express')();
+const app = require("../../app");
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const middlewares = require('../middlewares/middlewares');
-//const app = require("./app");
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const port = process.env.PORT || 5000;
+
 const connectedUsers = [];
 
 
@@ -18,10 +19,13 @@ app.use(
     origin: 'http://localhost:3000',
   }),
 );
+http.listen(port, () => {
+  console.log(`App is running on http://localhost:${port}`);
+});
 
 io.on("connection", socket => {
   var userName = "";
-  console.log("ENTERRRRRRRRRRRRRRRRRRRRRRRRR");
+  console.log("User Connected");
   socket.on("user connected", newUser => {
     console.log("New user connected to backend", newUser);
     userName = newUser;
@@ -44,10 +48,6 @@ io.on("connection", socket => {
     connectedUsers.splice(userIndex, 1);
     console.log(`Connected users :`);
     console.table(connectedUsers);
-    if(connectedUsers.length<2){
-      gameStatus=gamePhases.ended;
-      io.emit("round end",['Game canceled no']);
-    }
     io.emit("update connected users", connectedUsers);
   });
 });
