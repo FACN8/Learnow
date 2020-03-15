@@ -1,10 +1,11 @@
 import React from 'react';
 import './Header.css';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
+  const history = useHistory();
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
       return;
@@ -24,7 +25,7 @@ function Header() {
             onChange={e => setSearchTerm(e.target.value)}
             onKeyPress={event => {
               if (event.key === 'Enter') {
-                window.location = handleLink();
+                history.push(handleLink());
               }
             }}
             className='searchInput'
