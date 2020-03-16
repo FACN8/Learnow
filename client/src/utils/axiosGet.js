@@ -11,7 +11,6 @@ const axiosGet = url => {
   const config = {
     headers: {
       Accept: 'application/json, text/plain, */*',
-      Authorization: `Basic ${process.env.REACT_APP_AUTH}`,
       'Content-Type': 'application/json;charset=utf-8',
     },
   };
