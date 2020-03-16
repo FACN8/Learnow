@@ -1,3 +1,5 @@
+// Our own costum middlewares 
+
 const notFound = (req, res, next) => {
   const error = new Error(`Are you lost?
     we are unable to find ${req.originalUrl}`);
@@ -17,5 +19,5 @@ const errorHandler = (error, req, res, next) => {
 
 module.exports = {
   notFound,
-  errorHandler,
+  errorHandler
 };
