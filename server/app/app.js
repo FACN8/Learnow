@@ -7,7 +7,7 @@ const router = require('./routes/index');
 
 require ('dotenv').config();
 
-var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com','https://learnow-be.herokuapp.com'];
+var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {

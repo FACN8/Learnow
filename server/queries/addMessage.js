@@ -1,8 +1,7 @@
 
 const dbConnection = require("./db_connection");
 
-// Assuming the verification if this user exists or not is done elsewhere for now
-module.exports = (userId,message) => {
+module.exports = (userId,message,cb) => {
 dbConnection.query(
   'INSERT INTO messages VALUES ($1,$2)',[userId,message],
   (err,res) =>{
