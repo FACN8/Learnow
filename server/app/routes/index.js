@@ -1,41 +1,18 @@
-const app = module.exports = require ('express')();
-const morgan = require('morgan');
-const helmet = require('helmet');
-const cors = require('cors');
-const middlewares = require('../middlewares/middlewares');
- 
+const router = require('express').Router();
+const {jwtCheck} = require ('../middlewares/auth0');
 
-
-var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
-app.use(morgan('common'));
-
-app.use(helmet());
-
-app.use(
-  cors(corsOptions),
-);
-
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Welcome home');
 });
 
-app.get('/getcourses/*',require('../actions/getCourses'));
 
+router.get('/getcourses/*',require('../actions/getCourses'));
 
+// To have an authinticated route, it should run through the jwtCheck middleware example bellow
+router.use(jwtCheck);
 
-app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
-
-app.all('*',(req,res)=>{
-  res.status(404).send({message:'Are you even more lost? not found 404'});
+router.get('/authorized', function (req, res) {
+    res.send('Secured Resource');
 });
+
+module.exports = router;
