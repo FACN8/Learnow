@@ -55,9 +55,9 @@ function Header() {
       )}
 
       {isAuthenticated && <span className='loginButton' onClick={() => logout()}>Log out</span>}
-        <Link to='/Register'>
-          <span className='joinNowButton'>Join now</span>
-        </Link>
+
+      {!isAuthenticated && (<span className='joinNowButton' onClick={() => loginWithPopup({})}>Join now</span>)}
+          
       </div>
     </section>
   );
