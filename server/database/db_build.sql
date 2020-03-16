@@ -8,7 +8,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TABLE IF EXISTS groups,users
+DROP TABLE IF EXISTS groups,users,
 group_users,group_messages,messages
 ;
 
@@ -33,23 +33,26 @@ create table users (
 	user_name VARCHAR(30),
 	total_groups INT
 );
-insert into users (user_id,user_name,total_groups) values ('Najwan',1);
-insert into users (user_id,user_name,total_groups) values ('Aysam',1);
+insert into users (user_name,total_groups) values ('Najwan',1);
+insert into users (user_name,total_groups) values ('Aysam',1);
 
 create table group_users (
-	group_id INTEGER FOREIGN KEY REFERENCES groups(id),
-	user_id INTEGER FOREIGN KEY REFERENCES users(id)
+	group_id INTEGER ,
+	user_id INTEGER ,
+FOREIGN KEY (group_id) REFERENCES groups(id),
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
-insert into group_users (user_id,group_id) values (1,1);
-insert into group_users (user_id,group_id) values (1,2);
+insert into group_users (group_id,user_id) values (1,1);
+insert into group_users (group_id,user_id) values (1,2);
 
 
 
 create table messages (
 	id SERIAL PRIMARY KEY,
-user_id INTEGER  FOREIGN KEY REFERENCES users(id),
+user_id INTEGER  ,
 message VARCHAR(255),
-created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON messages
@@ -61,8 +64,10 @@ insert into messages (user_id,message) values (1,'Whats my name?');
 insert into messages (user_id,message) values (2,'Say my name!');
 
 create table group_messages (
-	id INTEGER FOREIGN KEY  REFERENCES groups(id),
-	message INTEGER FOREIGN KEY REFERENCES messages(id)
+	group_id INTEGER ,
+	message_id INTEGER ,
+	FOREIGN KEY  (group_id) REFERENCES groups(id),
+	FOREIGN KEY (message_id) REFERENCES messages(id)
 );
 
 COMMIT;
