@@ -15,7 +15,7 @@
   height: 50vh;
   background-image: url("/res/webDescription-background-cut.png");
   background-position: center;
-  opacity: 65%;
+  opacity: 0.65;
   z-index: -1;
 }
 .content{

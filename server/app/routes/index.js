@@ -10,14 +10,24 @@ const port = process.env.PORT || 5000;
 const connectedUsers = [];
 
 
+
+var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 app.use(morgan('common'));
 
 app.use(helmet());
 
 app.use(
-  cors({
-    origin: 'http://localhost:3000',
-  }),
+  cors(corsOptions),
 );
 http.listen(port, () => {
   console.log(`App is running on http://localhost:${port}`);
