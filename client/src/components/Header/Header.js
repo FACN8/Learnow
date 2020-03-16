@@ -54,10 +54,12 @@ function Header() {
         <span className='loginButton' onClick={() => loginWithRedirect({})}>Log in</span>
       )}
 
-      {isAuthenticated && <span className='loginButton' onClick={() => logout()}>Log out</span>}
-        <Link to='/Register'>
-          <span className='joinNowButton'>Join now</span>
-        </Link>
+      {isAuthenticated && <span className='loginButton' onClick={() => logout({
+      returnTo: window.location.origin.includes('localhost') ? 'http://localhost:3000/' : 'https://learnow.netlify.com/'
+    })}>Log out</span>}
+
+      {!isAuthenticated && (<span className='joinNowButton' onClick={() => loginWithPopup({})}>Join now</span>)}
+          
       </div>
     </section>
   );
