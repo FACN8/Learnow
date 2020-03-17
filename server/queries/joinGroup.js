@@ -1,5 +1,4 @@
-
-const dbConnection = require("./db_connection");
+const dbConnection = require("../database/db_connection");
 
 module.exports = (groupId,userId,cb) => {
 dbConnection.query(

@@ -1,13 +1,15 @@
 const app = module.exports = require ('express')();
 
-const {morgan,helmet,cors} = require ('./middlewares/standard');
+const {morgan,helmet,bodyParser,cors} = require ('./middlewares/standard');
 const {notFound,errorHandler} = require('./middlewares/middlewares');
 
-const router = require('./routes/index');
-
+const coursesRouter = require('./routes/courses');
+const usersRouter = require ('./routes/users');
+const groupsRouter = require('./routes/groups');
+const messagesRouter = require('./routes/messages');
 require ('dotenv').config();
 
-var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com'];
+var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com','http://localhost:5000'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -20,11 +22,25 @@ var corsOptions = {
 
 app.use(morgan('common'));
 app.use(helmet());
-app.use(
-  cors(corsOptions)
-);
+// app.use(
+//   cors(corsOptions)
+// );
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-app.use('/',router);
+
+app.use('/getcourses',coursesRouter);
+
+app.use('/users',usersRouter);
+
+app.use('/groups',groupsRouter);
+
+app.use('/messages',messagesRouter);
+
+
+app.get('/', (req, res) => {
+  res.send('Welcome home');
+});
 
 
 app.use(notFound);

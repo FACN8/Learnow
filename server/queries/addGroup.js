@@ -1,4 +1,4 @@
-const dbConnection = require("./db_connection");
+const dbConnection = require("../database/db_connection");
 
 // Assuming the verification if this user exists or not is done elsewhere for now
 module.exports = (name,description,course,participants,cb) => {
