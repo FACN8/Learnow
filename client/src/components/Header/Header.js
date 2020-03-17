@@ -2,10 +2,13 @@ import React from 'react';
 import './Header.css';
 
 import { Link, useHistory } from 'react-router-dom';
+import { useAuth0 } from "../../react-auth0-spa";
 
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const history = useHistory();
+  const { isAuthenticated, loginWithRedirect,loginWithPopup, logout, loading } = useAuth0();
+
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
       return;
@@ -42,12 +45,21 @@ function Header() {
         </div>
       </div>
       <div>
+        {/* <div>
         <Link to='/Login'>
           <span className='loginButton'>Login</span>
         </Link>
-        <Link to='/Register'>
-          <span className='joinNowButton'>Join now</span>
-        </Link>
+        </div> */}
+      {!isAuthenticated && (
+        <span className='loginButton' onClick={() => loginWithRedirect({})}>Log in</span>
+      )}
+
+      {isAuthenticated && <span className='loginButton' onClick={() => logout({
+      returnTo: window.location.origin.includes('localhost') ? 'http://localhost:3000/' : 'https://learnow.netlify.com/'
+    })}>Log out</span>}
+
+      {!isAuthenticated && (<span className='joinNowButton' onClick={() => loginWithPopup({})}>Join now</span>)}
+          
       </div>
     </section>
   );

@@ -1,83 +1,18 @@
-const app = require("../../app");
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-const morgan = require('morgan');
-const helmet = require('helmet');
-const cors = require('cors');
-const middlewares = require('../middlewares/middlewares');
-const port = process.env.PORT || 5000;
 
-const connectedUsers = [];
+const router = require('express').Router();
+const {jwtCheck} = require ('../middlewares/auth0');
 
-
-
-var whitelist = ['http://localhost:3000', 'https://learnow.netlify.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
-app.use(morgan('common'));
-
-app.use(helmet());
-
-app.use(
-  cors(corsOptions),
-);
-http.listen(port, () => {
-  console.log(`App is running on http://localhost:${port}`);
-});
-
-io.on("connection", socket => {
-  var userName = "";
-  console.log("User Connected");
-  socket.on("user connected", newUser => {
-    console.log("New user connected to backend", newUser);
-    userName = newUser;
-    connectedUsers.push(userName);
-    console.log(`${userName} has joind the game`);
-    console.log(`Connected users :`);
-    console.table(connectedUsers);
-    io.emit("update connected users", connectedUsers);
-
-
-    socket.on("chat message", function(msg) {
-      console.log(msg);
-      io.emit("chat message", userName + " :" + msg);
-    });
-  });
-
-  socket.on("disconnect", () => {
-    console.log(`${userName} has left`);
-    const userIndex = connectedUsers.indexOf(userName);
-    connectedUsers.splice(userIndex, 1);
-    console.log(`Connected users :`);
-    console.table(connectedUsers);
-    io.emit("update connected users", connectedUsers);
-  });
-});
-
-
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Welcome home');
 });
 
-app.get('/GroupChat', function(req, res){
-  res.sendFile(__dirname +'/GroupChat/GroupChat.html');
+router.get('/getcourses/*',require('../actions/getCourses'));
+
+// To have an authinticated route, it should run through the jwtCheck middleware example bellow
+router.use(jwtCheck);
+
+router.get('/authorized', function (req, res) {
+    res.send('Secured Resource');
 });
 
-app.get('/getcourses/*',require('../actions/getCourses'));
-
-
-
-app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
-
-app.all('*',(req,res)=>{
-  res.status(404).send({message:'Are you even more lost? not found 404'});
-});
+module.exports = router;

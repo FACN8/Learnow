@@ -1,16 +1,19 @@
 import React from 'react';
-import get from '../../utils/axiosGet';
+import './GroupChat.css';
 
-function GroupChat(){
-    const URL = `http://localhost:5000/GroupChat`;
-    get(URL)
-        .then(res => {
-            console.log(res);
-            
-        })
-        .catch(err => {
-            console.log(err);
-        });
+import { Link, useHistory } from 'react-router-dom';
+
+function GroupChat() {
+var socket;
+  return (
+      <div>
+        <ul id="messages"></ul>
+        <form action="">
+        <input id="m" autoComplete="off" /><button>Send</button>
+        </form>
+      </div>
+   
+  );
 }
 
 export default GroupChat;

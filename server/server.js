@@ -1,4 +1,4 @@
-const app = require('./app/routes/index');
+const app = require('./app/app');
 
 
 
