@@ -20,7 +20,7 @@ create table groups (
 	description VARCHAR(50),
 	course INT,
 	participants INT,
-	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON groups
@@ -51,7 +51,7 @@ create table messages (
 	id SERIAL PRIMARY KEY,
 user_id INTEGER  ,
 message VARCHAR(255),
-created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TRIGGER set_timestamp
