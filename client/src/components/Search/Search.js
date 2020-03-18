@@ -34,15 +34,21 @@ const Search = props => {
         reqTime.current = new Date() - reqTime.current;
         setLoading(false);
         setError(null);
-        setSearchResult(res);
+        if(!res.length) throw new Error (`Empty result`);
+        setSearchResult(res.length>0?res:null );
       })
       .catch(err => {
+        console.log(err);
         setError(err);
       });
   }, [term, page]);
 
-  if (error) return <h2>Unexpected error happened..</h2>;
-
+  if (error) {
+    if(error.message ===`Empty result`) 
+    return (<h2>No courses found, try again.</h2>);
+    else
+    return (<h2>Unexpected error happened..</h2>);
+  }
   if (loading) return Spinner();
   if (searchResult) {
     return (

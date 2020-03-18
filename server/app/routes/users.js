@@ -3,8 +3,8 @@ const addUser = require('../../queries/addUser');
 
 
 
-router.get('/add/:username', (req, res) => {
-const username = req.params.username ;
+router.post('/add', (req, res) => {
+const {username} = req.body;
   addUser(username,(err,result)=>{
     if(err) res.send(500,`Failed to add user, error : ${err}`);
     else
