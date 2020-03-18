@@ -30,13 +30,16 @@ const Search = props => {
 
     setLoading(true);
     get(URL)
-      .then(res => {
+    .then(res => {
+      if(!res.data.count) 
+        setError('Empty result');
+      else{
         reqTime.current = new Date() - reqTime.current;
-        setLoading(false);
         setError(null);
-        if(!res.length) throw new Error (`Empty result`);
-        setSearchResult(res.length>0?res:null );
-      })
+        setLoading(false);
+        setSearchResult(res);
+      }
+    })
       .catch(err => {
         console.log(err);
         setError(err);
