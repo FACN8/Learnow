@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const {jwtCheck} = require ('../middlewares/auth0');
 
+
 router.get('/', (req, res) => {
   res.send('Welcome home');
 });

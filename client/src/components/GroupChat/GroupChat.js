@@ -4,15 +4,13 @@ import './GroupChat.css';
 import { Link, useHistory } from 'react-router-dom';
 
 function GroupChat() {
-var socket;
   return (
-      <div>
+    <div>
         <ul id="messages"></ul>
         <form action="">
         <input id="m" autoComplete="off" /><button>Send</button>
         </form>
       </div>
-   
   );
 }
 
