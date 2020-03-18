@@ -7,7 +7,7 @@ import { useAuth0 } from "../../react-auth0-spa";
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const history = useHistory();
-  const { isAuthenticated, loginWithRedirect,loginWithPopup, logout, loading } = useAuth0();
+  const { isAuthenticated, loginWithRedirect,loginWithPopup, logout, loading ,user} = useAuth0();
 
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
@@ -15,7 +15,7 @@ function Header() {
     }
     return `/search/${searchTerm.trim()}/1`;
   };
-
+console.log(user);
   return (
     <section className='header'>
       <div style={{ display: 'flex' }}>

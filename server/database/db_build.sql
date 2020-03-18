@@ -16,8 +16,8 @@ group_users,group_messages,messages
 
 create table groups (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(50),
-	description VARCHAR(50),
+	name UNIQUE VARCHAR(50),
+	description VARCHAR(200),
 	course INT,
 	participants INT,
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -40,7 +40,8 @@ create table group_users (
 	group_id INTEGER ,
 	user_id INTEGER ,
 FOREIGN KEY (group_id) REFERENCES groups(id),
-FOREIGN KEY (user_id) REFERENCES users(id)
+FOREIGN KEY (user_id) REFERENCES users(id),
+UNIQUE(group_id,user_id)
 );
 insert into group_users (group_id,user_id) values (1,1);
 insert into group_users (group_id,user_id) values (1,2);
