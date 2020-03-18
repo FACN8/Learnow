@@ -15,7 +15,6 @@ function Header() {
     }
     return `/search/${searchTerm.trim()}/1`;
   };
-console.log(user);
   return (
     <section className='header'>
       <div style={{ display: 'flex' }}>
