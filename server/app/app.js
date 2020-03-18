@@ -19,7 +19,7 @@ var corsOptions = {
     }
   }
 }
-
+app.options('*', cors())
 app.use(morgan('common'));
 app.use(helmet());
 // app.use(
