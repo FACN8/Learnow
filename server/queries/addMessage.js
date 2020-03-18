@@ -1,5 +1,5 @@
 
-const dbConnection = require("./db_connection");
+const dbConnection = require("../database/db_connection");
 
 module.exports = (userId,message,cb) => {
 dbConnection.query(

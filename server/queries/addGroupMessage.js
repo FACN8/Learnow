@@ -1,5 +1,5 @@
 
-const dbConnection = require("./db_connection");
+const dbConnection = require("../database/db_connection");
 const addMessage = require("./addMessage");
 module.exports = (userId,message,groupId,cb) => {
 
