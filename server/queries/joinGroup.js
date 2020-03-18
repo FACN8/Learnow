@@ -7,7 +7,9 @@ module.exports = (groupId,userId,cb) => {
       if(err) return cb(err);
       updateTotalGroups(userId,(err,res)=>{
           if(err) return cb(err);
-    dbConnection.query(`INSERT INTO group_users (group_id,user_id) VALUES ($1,$2)`,
+    
+    dbConnection.query(
+      `INSERT INTO group_users(group_id,user_id) VALUES ($1,$2);`,
     [groupId,userId],
       (err,res) =>{
         if(err) return cb(err);
