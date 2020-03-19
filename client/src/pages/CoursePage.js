@@ -6,11 +6,14 @@ import SelectedCourseGroups from '../components/SelectedCourseGroups/SelectedCou
 function CoursePage({ state, setState }) {
   return (
     <div>
-    <SelectedCourse 
-      state={state}
-      setState={setState}
-    />
-    <SelectedCourseGroups />
+      <SelectedCourse 
+      state={state} 
+      setState={setState} 
+      />
+      <SelectedCourseGroups 
+      state={state} 
+      setState={setState} 
+      />
     </div>
   );
 }

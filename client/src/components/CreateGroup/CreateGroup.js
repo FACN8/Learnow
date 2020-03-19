@@ -5,10 +5,9 @@ const CreateGroup = ({courseId}) => {
   const createGroup = (e) => {
     e.preventDefault();
   };
-  console.log(courseId);
   return (
     <div className='create-group-container'>
-      <form onSubmit={createGroup}>
+      <form className='info-form' onSubmit={createGroup}>
       <span>Group name</span>
         <label htmlFor='name'>
           <input type='text' name='name' autoComplete='off' />
@@ -17,7 +16,7 @@ const CreateGroup = ({courseId}) => {
         <label htmlFor='description'>
           <input type='text' name='description' autoComplete='off' />
         </label>
-        <button type='submit' value='Send'>
+        <button className='send-btn' type='submit' value='Send'>
           Create group!
         </button>
       </form>
