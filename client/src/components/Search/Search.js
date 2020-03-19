@@ -20,16 +20,14 @@ const Search = props => {
   }, [props.match.params.term, props.match.params.page]);
 
   useEffect(() => {
-    reqTime.current = new Date();
-    // let URL = `https://cors-anywhere.herokuapp.com/${apiBase}/courses/?search=${term}&page=${page}&page_size=50`;
-    let URL = `https://learnow-be.herokuapp.com/getcourses/?search=${term}&page=${page}&page_size=50`;
-
-    if (window.location.hostname.includes('localhost')) {
-      URL = `http://localhost:5000/getcourses/?search=${term}&page=${page}&page_size=50`;
+    let apiUrl = `http://localhost:5000/getcourses/?search=${term}&page=${page}&page_size=50`;;
+    if(process.env.NODE_ENV==='production'){
+      apiUrl = `https://learnow-be.herokuapp.com/getcourses/?search=${term}&page=${page}&page_size=50`;
     }
-
+    
+    reqTime.current = new Date();
     setLoading(true);
-    get(URL)
+    get(apiUrl)
       .then(res => {
         if(!res.data.count) 
           setError(`Empty result`);

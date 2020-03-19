@@ -18,7 +18,7 @@ function Header() {
   useEffect(() => {
     if (!loading && user) {
       const id = user.sub.split('|')[1];
-      axiosPost('http://localhost:5000/users/add', {
+      axiosPost(`/users/add`, {
         id,
         username: user.nickname,
       })
