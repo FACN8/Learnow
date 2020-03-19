@@ -8,37 +8,42 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TABLE IF EXISTS groups,users,
-group_users,group_messages,messages
-;
+DROP TABLE IF EXISTS group_users CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS groups CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
+
+
+
+create table users (
+	id integer PRIMARY KEY,
+	user_name VARCHAR(30),
+	total_groups integer,
+	UNIQUE(id)
+);
 
 
 create table groups (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(50),
 	description VARCHAR(200),
-	course INT,
-	participants INT,
+	course integer,
+	participants integer,
+	creator_id integer,
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	UNIQUE(name)
+	FOREIGN KEY (creator_id) REFERENCES users(id),
+	UNIQUE(name,course)
 );
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON groups
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
-insert into groups  (name,description,course,participants) values ('Learnow','A group for learnow crew',12312,2);
 
-create table users (
-	id SERIAL PRIMARY KEY,
-	user_name VARCHAR(30),
-	total_groups INT,
-	UNIQUE(user_name)
-);
 
 create table group_users (
-	group_id INTEGER ,
-	user_id INTEGER ,
+group_id integer,
+user_id integer,
 FOREIGN KEY (group_id) REFERENCES groups(id),
 FOREIGN KEY (user_id) REFERENCES users(id),
 UNIQUE(group_id,user_id)
@@ -46,24 +51,20 @@ UNIQUE(group_id,user_id)
 
 
 create table messages (
-	id SERIAL PRIMARY KEY,
-user_id INTEGER  ,
+id SERIAL PRIMARY KEY,
+user_id integer,
+group_id integer,
+user_name VARCHAR(20),
 message VARCHAR(255),
 updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-FOREIGN KEY (user_id) REFERENCES users(id)
+FOREIGN KEY (user_id) REFERENCES users(id),
+FOREIGN KEY (group_id) REFERENCES groups(id)
 );
+
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON messages
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
-
-
-create table group_messages (
-	group_id INTEGER ,
-	message_id INTEGER ,
-	FOREIGN KEY  (group_id) REFERENCES groups(id),
-	FOREIGN KEY (message_id) REFERENCES messages(id)
-);
 
 COMMIT;

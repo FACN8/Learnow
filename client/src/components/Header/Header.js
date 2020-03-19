@@ -17,7 +17,11 @@ function Header() {
   } = useAuth0();
   useEffect(() => {
     if (!loading && user) {
-      axiosPost('http://localhost:5000/users/add', { username: user.nickname })
+      const id = user.sub.split('|')[1];
+      axiosPost('http://localhost:5000/users/add', {
+        id,
+        username: user.nickname,
+      })
         .then(console.log)
         .catch(console.log);
     }

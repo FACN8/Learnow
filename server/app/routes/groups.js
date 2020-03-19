@@ -4,9 +4,9 @@ const joinGroup = require('../../queries/joinGroup');
 
 
 router.post('/add', (req, res) => {
-const {name,description,course} = req.body;
+const {name,description,course,creatorId} = req.body;
 console.log(req.body);
-  addGroup(name,description,course,(err,result)=>{
+  addGroup(name,description,course,creatorId,(err,result)=>{
     if(err) res.send(500,`Failed to create group, error : ${err}`);
     else
     res.send(201,`${result.rows} is added`);
