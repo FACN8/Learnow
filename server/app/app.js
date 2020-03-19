@@ -22,7 +22,7 @@ var corsOptions = {
 app.options('*', cors());
 app.use(morgan('common'));
 app.use(helmet());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

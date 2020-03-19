@@ -4,10 +4,7 @@ module.exports = (groupId,cb) => {
   dbConnection.query(
     `
     SELECT user_name, message, updated_at 
-    FROM messages INNER JOIN group_messages ON 
-    messages.id=group_messages.message_id 
-    INNER JOIN users ON 
-    users.id = user_id
+    FROM messages
     WHERE group_id = $1
     `,[groupId],
   (err,res) =>{
