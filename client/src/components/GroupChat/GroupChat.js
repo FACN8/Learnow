@@ -24,7 +24,7 @@ const sendMsg = (e)=>{
         {msgsArray.map(message => (
           <li>{message}</li>
         ))}
-        <form onSubmit={sendMsg}>
+        <form className='chat-from' onSubmit={sendMsg}>
           <label htmlFor='msg'>
         <input type="text" name='msg' id="m" autoComplete="off" />
         </label>
