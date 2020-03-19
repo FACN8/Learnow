@@ -6,6 +6,7 @@ const CreateGroup = ({courseId}) => {
     e.preventDefault();
     const name = e.target.name.value;
     const description = e.target.description.value;
+    // A post request will be added here, once merged with the frontend-to-db branch
   };
   return (
     <div className='create-group-container'>
