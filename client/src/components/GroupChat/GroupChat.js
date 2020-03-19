@@ -4,7 +4,11 @@ import './GroupChat.css';
 import io from 'socket.io-client';
 
 function GroupChat() {
-const [socket,setSocket] = useState(io.connect('http://localhost:5000'));
+  let apiUrl = 'http://localhost:5000';
+  if(process.env.NODE_ENV==='production'){
+  apiUrl = 'https://learnow-be.herokuapp.com';
+  }
+const [socket,setSocket] = useState(io.connect(apiUrl));
 const [msgsArray, setMsgsArray] = useState([])
 useEffect(()=>{
   socket.emit("user connected", 'Aysam1');

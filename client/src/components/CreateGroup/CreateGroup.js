@@ -3,10 +3,14 @@ import './CreateGroup.css';
 import axiosPost from '../../utils/axiosPost';
 import { useAuth0 } from '../../react-auth0-spa';
 import RequestLogin from '../RequestLogin/RequestLogin';
+
+
 const CreateGroup = ({ courseId ,setCreating }) => {
+
   const { user,isAuthenticated,loading } = useAuth0();
   const [creation, setCreation] = useState(false);
   const [err, setErr] = useState(null);
+  
   const createGroup = e => {
     e.preventDefault();
     if(!isAuthenticated){
@@ -17,7 +21,7 @@ const CreateGroup = ({ courseId ,setCreating }) => {
     const name = e.target.name.value;
     const description = e.target.description.value;
     const creatorId = user.sub.split('|')[1];
-    axiosPost('http://localhost:5000/groups/add', {
+    axiosPost(`/groups/add`, {
       name,
       description,
       course: courseId,
