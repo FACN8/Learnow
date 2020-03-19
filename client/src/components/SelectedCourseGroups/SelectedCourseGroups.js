@@ -42,8 +42,15 @@ const switchCreating = ()=>setCreating( (creating) => !creating );
 
   return (
     <div className='groups-container-bg'>
-    <button onClick={switchCreating} className="createGroup">Create group</button>
-    {creating && <div className="form-container"><CreateGroup courseId={state.selectedCourse.id}/></div>}
+    <button onClick={switchCreating} className="createGroup grow">Create group</button>
+    {creating &&
+    <div className="form-container">
+    <CreateGroup 
+    courseId={state.selectedCourse.id}
+    setCreating={setCreating}
+    />
+    </div>
+    }
 
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>

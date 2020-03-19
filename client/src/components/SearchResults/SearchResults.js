@@ -45,7 +45,7 @@ const SearchResults = ({
         <span
           onClick={() => setState(prevState => ({ ...prevState, selectedCourse: course }))
           }
-          className="details-button"
+          className="details-button grow"
         >
           More details
         </span>

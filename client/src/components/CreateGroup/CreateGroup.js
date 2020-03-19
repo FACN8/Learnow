@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './CreateGroup.css';
 import axiosPost from '../../utils/axiosPost';
-import { FormHelperText } from '@material-ui/core';
 import { useAuth0 } from '../../react-auth0-spa';
 import RequestLogin from '../RequestLogin/RequestLogin';
-const CreateGroup = ({ courseId }) => {
+const CreateGroup = ({ courseId ,setCreating }) => {
   const { user,isAuthenticated,loading } = useAuth0();
   const [creation, setCreation] = useState(false);
   const [err, setErr] = useState(null);
@@ -34,7 +33,7 @@ const CreateGroup = ({ courseId }) => {
     }
   };
 
-
+console.log(err);
 
   if (err){
     if(err==='Not logged in'){
@@ -45,9 +44,9 @@ const CreateGroup = ({ courseId }) => {
     return (
       <div className='create-group-container'>
         <span>Oops! an error happen please try a different name!</span>
-        <button
+        <button 
           onClick={() => setErr(false)}
-          className='send-btn'
+          className='send-btn grow'
           type='submit'
           value='Try again'
         >
@@ -62,8 +61,11 @@ const CreateGroup = ({ courseId }) => {
       <div className='create-group-container'>
         <span>Group has been created!</span>
         <button
-          onClick={() => setCreation(false)}
-          className='send-btn'
+          onClick={() =>{
+             setCreation(false)
+             setCreating(false)
+          }}
+          className='send-btn grow'
           type='submit'
           value='Close'
         >
@@ -83,7 +85,7 @@ const CreateGroup = ({ courseId }) => {
         <label htmlFor='description'>
           <input type='text' name='description' autoComplete='off' required />
         </label>
-        <button className='send-btn' type='submit' value='Send'>
+        <button className='send-btn grow' type='submit' value='Send'>
           Create group!
         </button>
       </form>

@@ -7,9 +7,9 @@ const {loginWithPopup,isAuthenticated,loading} = useAuth0();
 if(loading) return <span>Logging in ..</span>
 if(isAuthenticated) setErr((err)=>err=false)
   return (
-    <div>
+    <div className='req-login-container'>
     <span>This action requires you to be logged in!</span>
-    <button onClick={()=>loginWithPopup({})}>Click here to login</button>
+    <button className='req-login-btn grow' onClick={()=>loginWithPopup({})}>Click here to login</button>
     </div>
   )
 

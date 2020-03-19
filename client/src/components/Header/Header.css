@@ -2,33 +2,46 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
 a {
     text-decoration: none;
 }
-.header{
+
+button {
+    border-radius: 5px;
+
+}
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 98vw;
     height: 14vh;
 }
-.webLogo{
+
+.webLogo {
     width: 10vw;
-    height:15vh;
+    height: 15vh;
     min-width: 10vw;
     min-height: 2rem;
 }
-.searchBar{
+
+.searchBar {
     margin-top: 4vh;
 }
-.searchInput, .searchButton{
+
+.searchInput,
+.searchButton {
     padding: 1vw 0;
 }
-.searchInput{
+
+.searchInput {
     width: 30vw;
     padding: 1.5vh 0;
 }
-.searchButton{
+
+.searchButton {
     position: absolute;
     background-color: #1D74D5;
     width: 4vw;
@@ -38,16 +51,18 @@ a {
     padding: 1.9vh 0;
     border-radius: 5px;
 }
-.loginButton{
+
+.loginButton {
     color: #1D74D5;
     font-size: 2em;
     font-weight: 1000;
     margin-left: auto;
     cursor: pointer;
 }
-.joinNowButton{
+
+.joinNowButton {
     background-color: #1D74D5;
-    padding:2vh 8px;
+    padding: 2vh 8px;
     height: 10vh;
     color: white;
     font-size: 23px;
@@ -57,11 +72,20 @@ a {
     border-radius: 5px;
 }
 
-@media screen and (max-width: 500px) { 
-   .joinNowButton {
-       font-size: 14px;
-   }
-   .loginButton{
-    font-size: 1.2em;
+.grow {
+    transition: all .2s ease-in-out;
 }
+
+.grow:hover {
+    transform: scale(1.1) perspective(10px);
+}
+
+@media screen and (max-width: 500px) {
+    .joinNowButton {
+        font-size: 14px;
+    }
+
+    .loginButton {
+        font-size: 1.2em;
+    }
 }
