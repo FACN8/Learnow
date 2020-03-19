@@ -4,7 +4,7 @@ import { useAuth0 } from '../../react-auth0-spa';
 
 const RequestLogin = ({setErr}) =>{
 const {loginWithPopup,isAuthenticated,loading} = useAuth0();
-if(loading) return <span>Logging in ..</span>
+if(loading) return <span>Loading ..</span>
 if(isAuthenticated) setErr((err)=>err=false)
   return (
     <div className='req-login-container'>
