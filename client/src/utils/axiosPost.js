@@ -3,7 +3,7 @@ import axios from 'axios';
 const checkResponse = response => {
   if (response.status !== 201) {
     console.log(`Error with the request! ${response.status}`);
-    return;
+    return new Error(`Server error , ${response.status}`)
   }
   return response;
 };

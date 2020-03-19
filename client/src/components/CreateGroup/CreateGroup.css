@@ -8,3 +8,12 @@
   width: 7rem;
   margin-top: 1rem;
 }
+.create-group-container{
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-group-container span {
+  color: white;
+}

@@ -5,7 +5,7 @@ import SelectedCourseGroups from '../components/SelectedCourseGroups/SelectedCou
 
 function CoursePage({ state, setState }) {
   return (
-    <div>
+    <div className='course-page'>
       <SelectedCourse 
       state={state} 
       setState={setState} 
