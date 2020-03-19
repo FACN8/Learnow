@@ -1,13 +1,10 @@
 const dbConnection = require('../database/db_connection');
 
-module.exports = (groupId, cb) => {
+module.exports = (courseId, cb) => {
   dbConnection.query(
-    `
-    SELECT user_name, message, updated_at 
-    FROM messages
-    WHERE group_id = $1
-    `,
-    [groupId],
+    `SELECT * FROM groups
+      WHERE course=$1`,
+    [courseId],
     (err, res) => {
       if (err) return cb(err);
       cb(null, res);
