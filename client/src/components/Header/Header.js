@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Header.css';
-
+import axiosPost from '../../utils/axiosPost';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth0 } from "../../react-auth0-spa";
+import { useAuth0 } from '../../react-auth0-spa';
 
 function Header() {
   const [searchTerm, setSearchTerm] = React.useState(null);
   const history = useHistory();
-  const { isAuthenticated, loginWithRedirect,loginWithPopup, logout, loading ,user} = useAuth0();
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    loginWithPopup,
+    logout,
+    loading,
+    user,
+  } = useAuth0();
+  useEffect(() => {
+    if (!loading && user) {
+      const id = user.sub.split('|')[1];
+      axiosPost('http://localhost:5000/users/add', {
+        id,
+        username: user.nickname,
+      })
+        .then(console.log)
+        .catch(console.log);
+    }
+  }, [loading, user]);
 
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
@@ -15,7 +33,6 @@ function Header() {
     }
     return `/search/${searchTerm.trim()}/1`;
   };
-console.log(user);
   return (
     <section className='header'>
       <div style={{ display: 'flex' }}>
@@ -45,21 +62,32 @@ console.log(user);
         </div>
       </div>
       <div>
-        {/* <div>
-        <Link to='/Login'>
-          <span className='loginButton'>Login</span>
-        </Link>
-        </div> */}
-      {!isAuthenticated && (
-        <span className='loginButton' onClick={() => loginWithRedirect({})}>Log in</span>
-      )}
+        {!isAuthenticated && (
+          <span className='loginButton' onClick={() => loginWithRedirect({})}>
+            Log in
+          </span>
+        )}
 
-      {isAuthenticated && <span className='loginButton' onClick={() => logout({
-      returnTo: window.location.origin.includes('localhost') ? 'http://localhost:3000/' : 'https://learnow.netlify.com/'
-    })}>Log out</span>}
+        {isAuthenticated && (
+          <span
+            className='loginButton'
+            onClick={() =>
+              logout({
+                returnTo: window.location.origin.includes('localhost')
+                  ? 'http://localhost:3000/'
+                  : 'https://learnow.netlify.com/',
+              })
+            }
+          >
+            Log out
+          </span>
+        )}
 
-      {!isAuthenticated && (<span className='joinNowButton' onClick={() => loginWithPopup({})}>Join now</span>)}
-          
+        {!isAuthenticated && (
+          <span className='joinNowButton' onClick={() => loginWithPopup({})}>
+            Join now
+          </span>
+        )}
       </div>
     </section>
   );
