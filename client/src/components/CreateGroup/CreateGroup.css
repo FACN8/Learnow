@@ -1,0 +1,10 @@
+.info-form{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.send-btn{
+  width: 7rem;
+  margin-top: 1rem;
+}
