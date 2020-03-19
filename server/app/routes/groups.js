@@ -21,12 +21,14 @@ router.post('/join', (req, res) => {
   });
 });
 
-router.get('/get/:courseId', (req, res) => {
+router.get('/get/courseid=:courseId', (req, res) => {
   const { courseId } = req.params;
   getCourseGroups(courseId, (err, result) => {
     if (err) res.send(500, `Failed to get groups: ${err}`);
     else res.json(200, result.rows);
   });
 });
+
+
 
 module.exports = router;
