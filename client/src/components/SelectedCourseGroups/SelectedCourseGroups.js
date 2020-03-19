@@ -1,5 +1,8 @@
 import React ,{useState} from 'react';
 import './SelectedCourseGroups.css';
+import { Link } from 'react-router-dom';
+
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -50,7 +53,9 @@ const switchCreating = ()=>setCreating( (creating) => !creating );
 
         {tileData.map(tile => (
           <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+            <Link className='img-link' to={'/GroupChat'}>
+              <img src={tile.img} alt={tile.title} />
+            </Link>
             <GridListTileBar
               title={tile.title}
               subtitle={<span>by: {tile.author}</span>}
