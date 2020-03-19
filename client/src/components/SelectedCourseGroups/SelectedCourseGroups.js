@@ -61,7 +61,7 @@ const switchCreating = ()=>setCreating( (creating) => !creating );
         {tileData.map(tile => (
           <GridListTile key={tile.img}>
             <Link className='img-link' to={'/GroupChat'}>
-              <img src={tile.img} alt={tile.title} />
+              <img className='group-img' src={tile.img} alt={tile.title} />
             </Link>
             <GridListTileBar
               title={tile.title}
