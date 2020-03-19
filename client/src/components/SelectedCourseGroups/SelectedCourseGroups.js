@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import './SelectedCourseGroups.css';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import CreateGroup from '../CreateGroup/CreateGroup';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,10 +38,16 @@ const tileData = [
     },
   ];
 
-function SelectedCourseGroups() { 
+function SelectedCourseGroups({state,setState}) { 
 const classes = useStyles();
+const [creating,setCreating]= useState(false);
+const switchCreating = ()=>setCreating( (creating) => !creating );
 
   return (
+    <div>
+    <button onClick={switchCreating} className="createGroup">Create group</button>
+    {creating && <div className="form-container"><CreateGroup courseId={state.selectedCourse.id}/></div>}
+
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
 
@@ -61,6 +68,7 @@ const classes = useStyles();
           </GridListTile>
         ))}
       </GridList>
+    </div>
     </div>
   );
 

@@ -4,14 +4,16 @@ import SelectedCourse from '../components/SelectedCourse/SelectedCourse';
 import SelectedCourseGroups from '../components/SelectedCourseGroups/SelectedCourseGroups';
 
 function CoursePage({ state, setState }) {
-  const course = state.selectedCourse;
   return (
     <div>
-    <SelectedCourse 
-      state={state}
-      setState={setState}
-    />
-    <SelectedCourseGroups />
+      <SelectedCourse 
+      state={state} 
+      setState={setState} 
+      />
+      <SelectedCourseGroups 
+      state={state} 
+      setState={setState} 
+      />
     </div>
   );
 }
