@@ -22,23 +22,26 @@ function GroupChat() {
     setMsgsArray([...msgsArray, msg]);
   });
   return (
-    <div className='chat-container'>
-      <div className='users-and-msgs-container'>
-        <ul className='users-container'></ul>
-        <div className='message-box'>
-          <ul className='messages'>
-            {msgsArray.map(message => (
-              <li>{message}</li>
-            ))}
-          </ul>
-          <form className='chat-from' onSubmit={sendMsg}>
-            <label className='input-label' htmlFor='msg'>
-              <input type='text' name='msg' id='m' autoComplete='off' />
-            </label>
-            <button type='submit' value='Send'>
-              Send
-            </button>
-          </form>
+    <div>
+      <div className='groupchat-nav'>nav</div>
+      <div className='chat-container'>
+        <div className='users-and-msgs-container'>
+          <ul className='users-container'></ul>
+          <div className='message-box'>
+            <ul className='messages'>
+              {msgsArray.map(message => (
+                <li>{message}</li>
+              ))}
+            </ul>
+            <form className='chat-from' onSubmit={sendMsg}>
+              <label className='input-label' htmlFor='msg'>
+                <input type='text' name='msg' id='m' autoComplete='off' />
+              </label>
+              <button type='submit' value='Send'>
+                Send
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
