@@ -9,6 +9,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import axiosGet from '../../utils/axiosGet.js';
 const useStyles = makeStyles(theme => ({
@@ -34,7 +35,7 @@ function SelectedCourseGroups({ state, setState }) {
   const [reqErr, setReqErr] = useState(false);
   const [tileData, setTileData] = useState([]);
   const [columns, setColumns] = useState(Math.floor(window.innerWidth / 350));
-  const [selectGroup, setSelectGroup] = useState({});
+  const [selectGroup, setGroup] = useState({});
   window.addEventListener('resize', () =>
     setColumns(Math.floor(window.innerWidth / 350)),
   );
@@ -99,9 +100,7 @@ function SelectedCourseGroups({ state, setState }) {
         >
           {tileData.map(tile => (
             <GridListTile key={tile.id}>
-              <Link className='img-link' to={'/GroupChat'}>
                 <img className='group-img' src={tile.img} alt={tile.title} />
-              </Link>
               <ListSubheader>
                 {
                   <div>
@@ -117,8 +116,9 @@ function SelectedCourseGroups({ state, setState }) {
                   <IconButton
                     aria-label={`info about ${tile.title}`}
                     className={classes.icon}
+                    onClick={()=>setGroup(tile)}
                   >
-                    <InfoIcon />
+                    <QuestionAnswerIcon htmlColor='#f5f6f8' />
                   </IconButton>
                 }
               />
