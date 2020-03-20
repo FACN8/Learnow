@@ -34,10 +34,12 @@ function SelectedCourseGroups({ state, setState }) {
   const [reqErr, setReqErr] = useState(false);
   const [tileData, setTileData] = useState([]);
   const [columns,setColumns] = useState(Math.floor(window.innerWidth/350));
+
+  window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350)));
+
   const switchCreating = () => setCreating(creating => !creating);
-  
-window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350)));
-  useEffect(() => {
+
+  const updateData = () => {
     axiosGet(`/groups/get/courseid=${state.selectedCourse.id}`)
       .then(res => {
         setTileData(
@@ -53,7 +55,14 @@ window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350
         setLoading(false);
       })
       .catch(err => setReqErr(reqErr => (reqErr = `Failed to get groups`)));
+  };
+
+  useEffect(() => {
+    updateData();
   }, []);
+  useEffect(() => {
+    updateData();
+  }, [creating]);
 
   console.log('The tile data is');
   console.log(tileData);
