@@ -8,6 +8,10 @@ const checkResponse = response => {
   return response;
 };
 const axiosGet = url => {
+  let apiUrl = 'http://localhost:5000';
+  if (process.env.NODE_ENV === 'production') {
+    apiUrl = 'https://learnow-be.herokuapp.com';
+  }
   const config = {
     headers: {
       Accept: 'application/json, text/plain, */*',
@@ -15,7 +19,7 @@ const axiosGet = url => {
     },
   };
   return axios
-    .get(url, config)
+    .get(apiUrl + url, config)
     .then(checkResponse)
     .catch(error => {
       throw new Error(`Could not get data , error:${error}`);
