@@ -27,7 +27,6 @@ return true;
     res.json(result.data);
     })
     .catch(err => {
-      console.log(err);
       res.status(500).send({
         message:'Failed to get courses',
         error:err
