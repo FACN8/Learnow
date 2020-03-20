@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Header.css';
-import axiosPost from '../../utils/axiosPost';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth0 } from '../../react-auth0-spa';
 
