@@ -17,50 +17,52 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#433d3d',
   },
   gridList: {
-    width: 500,
-    height: 450,
+    width: '95vw',
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
 
-const tileData = [
-  {
-    img: '/res/group-logo.jpg',
-    title: 'Group 1',
-    author: 'Beast 139',
-  },
-];
-
 function SelectedCourseGroups({ state, setState }) {
   const classes = useStyles();
   const [creating, setCreating] = useState(false);
-  const [groups, setGroups] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [reqErr, setReqErr] = useState(false);
+  const [tileData, setTileData] = useState([]);
+  const [columns,setColumns] = useState(Math.floor(window.innerWidth/350));
   const switchCreating = () => setCreating(creating => !creating);
-
+  
+window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350)));
   useEffect(() => {
     axiosGet(`/groups/get/courseid=${state.selectedCourse.id}`)
       .then(res => {
-        setGroups(res.data);
-        tileData = res.data.map(group => ({
-          img: '/res/group-logo.jpg',
-          title: group.name,
-          author: group.,
-        }));
+        setTileData(
+          res.data.map(group => ({
+            id: group.id,
+            img: '/res/group-logo.jpg',
+            title: group.name,
+            author: group.creator_name,
+            description: group.description,
+            activity: group.updated_at,
+          })),
+        );
+        setLoading(false);
       })
       .catch(err => setReqErr(reqErr => (reqErr = `Failed to get groups`)));
   }, []);
-  console.log('The groups are');
-  console.log(groups);
+
+  console.log('The tile data is');
+  console.log(tileData);
+  console.log(`error is:${reqErr}`);
+
   if (reqErr) {
     return <span>{reqErr}</span>;
   }
-  if (!groups) {
+  if (loading) {
     return <span>Loading groups . . . </span>;
   }
   return (
@@ -78,14 +80,25 @@ function SelectedCourseGroups({ state, setState }) {
       )}
 
       <div className={classes.root}>
-        <GridList cellHeight={200} className={classes.gridList}>
+        <GridList
+          cols={columns}
+          spacing={30}
+          cellHeight={500}
+          className={classes.gridList}
+        >
           {tileData.map(tile => (
-            <GridListTile key={tile.img}>
+            <GridListTile key={tile.id}>
               <Link className='img-link' to={'/GroupChat'}>
                 <img className='group-img' src={tile.img} alt={tile.title} />
               </Link>
+              <ListSubheader>{
+                <div>
+                <h2 className='group-title'>{tile.title}</h2>
+                <p className='group-desc'>{tile.description}</p>
+                </div>
+                }</ListSubheader>
               <GridListTileBar
-                title={tile.title}
+                title={`Latest activity ${tile.activity}`}
                 subtitle={<span>by: {tile.author}</span>}
                 actionIcon={
                   <IconButton
