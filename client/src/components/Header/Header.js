@@ -15,17 +15,6 @@ function Header() {
     loading,
     user,
   } = useAuth0();
-  useEffect(() => {
-    if (!loading && user) {
-      const id = user.sub.split('|')[1];
-      axiosPost(`/users/add`, {
-        id,
-        username: user.nickname,
-      })
-        .then(console.log)
-        .catch(console.log);
-    }
-  }, [loading, user]);
 
   const handleLink = () => {
     if (!searchTerm || !searchTerm.trim()) {
