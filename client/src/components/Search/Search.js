@@ -2,7 +2,7 @@ import './Search.css';
 import React, { useState, useEffect } from 'react';
 import SearchResults from '../SearchResults/SearchResults';
 import Spinner from '../Spinner/Spinner';
-import get from '../../utils/axiosGet';
+import axiosGet from '../../utils/axiosGet';
 
 const Search = props => {
   const [error, setError] = useState(null);
@@ -11,7 +11,6 @@ const Search = props => {
   const [term, setTerm] = useState(props.match.params.term);
   const [page, setPage] = useState(+props.match.params.page);
   const reqTime = React.useRef(0);
-  const apiBase = 'https://www.udemy.com/api-2.0';
   useEffect(() => {
     setSearchResult(null);
     setLoading(true);
@@ -20,14 +19,10 @@ const Search = props => {
   }, [props.match.params.term, props.match.params.page]);
 
   useEffect(() => {
-    let apiUrl = `http://localhost:5000/getcourses/?search=${term}&page=${page}&page_size=50`;;
-    if(process.env.NODE_ENV==='production'){
-      apiUrl = `https://learnow-be.herokuapp.com/getcourses/?search=${term}&page=${page}&page_size=50`;
-    }
-    
+    let requestPath = `/getcourses/?search=${term}&page=${page}&page_size=50`;
     reqTime.current = new Date();
     setLoading(true);
-    get(apiUrl)
+    axiosGet(requestPath)
       .then(res => {
         if(!res.data.count) 
           setError(`Empty result`);
