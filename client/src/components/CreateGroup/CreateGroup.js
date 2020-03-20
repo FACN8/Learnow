@@ -37,7 +37,6 @@ const CreateGroup = ({ courseId ,setCreating }) => {
     }
   };
 
-console.log(err);
 
   if (err){
     if(err==='Not logged in'){

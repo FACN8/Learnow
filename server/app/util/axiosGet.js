@@ -19,7 +19,6 @@ const axiosGet = url => {
     .get(url, config)
     .then(checkResponse)
     .catch(error => {
-      console.log(error);
       throw new Error(`Could not get data , error:${error}`);
     });
 };

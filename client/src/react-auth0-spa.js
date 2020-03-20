@@ -1,6 +1,7 @@
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import axiosPost from './utils/axiosPost'
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -43,7 +44,19 @@ export const Auth0Provider = ({
     // eslint-disable-next-line
   }, []);
 
-
+  useEffect(() => {
+    if (!loading && user) {
+      const id = user.sub.split('|')[1];
+      console.log(id);
+      console.log(user.nickname);
+      axiosPost(`/users/add`, {
+        id,
+        username: user.nickname,
+      })
+        .then(console.log)
+        .catch(console.log);
+    }
+  }, [loading,user]);
   const loginWithPopup = async (params = {}) => {
     setPopupOpen(true);
     try {

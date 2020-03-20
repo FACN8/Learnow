@@ -39,7 +39,6 @@ const Search = props => {
         }
       })
       .catch(err => {
-        console.log(err);
         setError(err);
       });
   }, [term, page]);

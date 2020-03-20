@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS users CASCADE;
 
 
 create table users (
-	id integer PRIMARY KEY,
+	id VARCHAR(50) PRIMARY KEY,
 	user_name VARCHAR(30),
 	total_groups integer,
 	UNIQUE(id)
@@ -30,7 +30,7 @@ create table groups (
 	description VARCHAR(200),
 	course integer,
 	participants integer,
-	creator_id integer,
+	creator_id VARCHAR(50),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	FOREIGN KEY (creator_id) REFERENCES users(id),
 	UNIQUE(name,course)
@@ -43,7 +43,7 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 
 create table group_users (
 group_id integer,
-user_id integer,
+user_id VARCHAR(50),
 FOREIGN KEY (group_id) REFERENCES groups(id),
 FOREIGN KEY (user_id) REFERENCES users(id),
 UNIQUE(group_id,user_id)
@@ -52,7 +52,7 @@ UNIQUE(group_id,user_id)
 
 create table messages (
 id SERIAL PRIMARY KEY,
-user_id integer,
+user_id VARCHAR(50),
 group_id integer,
 user_name VARCHAR(20),
 message VARCHAR(255),
