@@ -33,9 +33,11 @@ function SelectedCourseGroups({ state, setState }) {
   const [loading, setLoading] = useState(true);
   const [reqErr, setReqErr] = useState(false);
   const [tileData, setTileData] = useState([]);
-  const [columns,setColumns] = useState(Math.floor(window.innerWidth/350));
-
-  window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350)));
+  const [columns, setColumns] = useState(Math.floor(window.innerWidth / 350));
+  const [selectGroup, setSelectGroup] = useState({});
+  window.addEventListener('resize', () =>
+    setColumns(Math.floor(window.innerWidth / 350)),
+  );
 
   const switchCreating = () => setCreating(creating => !creating);
 
@@ -60,20 +62,20 @@ function SelectedCourseGroups({ state, setState }) {
   useEffect(() => {
     updateData();
   }, []);
+  
   useEffect(() => {
     updateData();
   }, [creating]);
 
-  console.log('The tile data is');
-  console.log(tileData);
-  console.log(`error is:${reqErr}`);
 
   if (reqErr) {
     return <span>{reqErr}</span>;
   }
+
   if (loading) {
     return <span>Loading groups . . . </span>;
   }
+
   return (
     <div className='groups-container-bg'>
       <button onClick={switchCreating} className='createGroup grow'>
@@ -92,7 +94,7 @@ function SelectedCourseGroups({ state, setState }) {
         <GridList
           cols={columns}
           spacing={30}
-          cellHeight={500}
+          cellHeight={'30vh'}
           className={classes.gridList}
         >
           {tileData.map(tile => (
@@ -100,12 +102,14 @@ function SelectedCourseGroups({ state, setState }) {
               <Link className='img-link' to={'/GroupChat'}>
                 <img className='group-img' src={tile.img} alt={tile.title} />
               </Link>
-              <ListSubheader>{
-                <div>
-                <h2 className='group-title'>{tile.title}</h2>
-                <p className='group-desc'>{tile.description}</p>
-                </div>
-                }</ListSubheader>
+              <ListSubheader>
+                {
+                  <div>
+                    <h2 className='group-title'>{tile.title}</h2>
+                    <p className='group-desc'>{tile.description}</p>
+                  </div>
+                }
+              </ListSubheader>
               <GridListTileBar
                 title={`Latest activity ${tile.activity}`}
                 subtitle={<span>by: {tile.author}</span>}
