@@ -3,9 +3,9 @@ const dbConnection = require('../database/db_connection');
 module.exports = (groupId, cb) => {
   dbConnection.query(
     `
-    SELECT user_name,user_id, message, updated_at 
-    FROM messages
-    WHERE group_id = $1
+    SELECT user_id,user_name,total_groups FROM group_users
+    INNER JOIN users ON users.id = group_users.user_id
+    WHERE group_id= $1
     `,
     [groupId],
     (err, res) => {
