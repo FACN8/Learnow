@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 const tileData = [
   {
-    img: '/res/logo-1.png',
+    img: '/res/group-logo.jpg',
     title: 'Group 1',
     author: 'Beast 139',
   },
@@ -39,25 +39,29 @@ const tileData = [
 function SelectedCourseGroups({ state, setState }) {
   const classes = useStyles();
   const [creating, setCreating] = useState(false);
-  const [groups,setGroups] = useState(null);
-  const [reqErr,setReqErr] = useState(false);
+  const [groups, setGroups] = useState(null);
+  const [reqErr, setReqErr] = useState(false);
   const switchCreating = () => setCreating(creating => !creating);
 
-  useEffect(()=>{
+  useEffect(() => {
     axiosGet(`/groups/get/courseid=${state.selectedCourse.id}`)
-    .then(res=>setGroups(res))
-    .catch(err=>setReqErr((reqErr=>reqErr=`Failed to get groups`)))
-  },[])
-console.log(reqErr);
-  if(reqErr){
-    return (
-    <span>{reqErr}</span>
-    )
+      .then(res => {
+        setGroups(res.data);
+        tileData = res.data.map(group => ({
+          img: '/res/group-logo.jpg',
+          title: group.name,
+          author: group.,
+        }));
+      })
+      .catch(err => setReqErr(reqErr => (reqErr = `Failed to get groups`)));
+  }, []);
+  console.log('The groups are');
+  console.log(groups);
+  if (reqErr) {
+    return <span>{reqErr}</span>;
   }
-  if(!groups){
-    return (
-      <span>Loading groups . . . </span>
-      )
+  if (!groups) {
+    return <span>Loading groups . . . </span>;
   }
   return (
     <div className='groups-container-bg'>
@@ -74,7 +78,7 @@ console.log(reqErr);
       )}
 
       <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList}>
+        <GridList cellHeight={200} className={classes.gridList}>
           {tileData.map(tile => (
             <GridListTile key={tile.img}>
               <Link className='img-link' to={'/GroupChat'}>
