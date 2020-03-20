@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
-import { useAuth0 } from '@auth0/auth0-spa-js';
 function GroupChat() {
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
