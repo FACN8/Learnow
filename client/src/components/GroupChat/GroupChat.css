@@ -95,3 +95,11 @@
   margin-left: 1rem;
 }
 
+.user-listing{
+  display: flex;
+
+}
+.user-in-list {
+  margin-left: 1rem;
+  margin: auto;
+}

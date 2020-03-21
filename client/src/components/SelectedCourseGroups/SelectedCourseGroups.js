@@ -48,7 +48,9 @@ function SelectedCourseGroups({ state, setState }) {
     if(!isAuthenticated){
       loginWithPopup();
     }else{
+      
       setGroup(tile);
+
     }
   }
 
@@ -114,7 +116,7 @@ function SelectedCourseGroups({ state, setState }) {
           {tileData.map(tile => (
             <GridListTile key={tile.id}>
                 <img className='group-img' src={tile.img} alt={tile.name} />
-              <ListSubheader>
+                <ListSubheader>
                 {
                   <div>
                     <h2 className='group-name'>{tile.name}</h2>

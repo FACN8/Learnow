@@ -51,7 +51,7 @@ function Header() {
       </div>
       <div>
         {!isAuthenticated && (
-          <span className='loginButton' onClick={() => loginWithRedirect({})}>
+          <span className='loginButton' onClick={() => loginWithPopup()}>
             Log in
           </span>
         )}
