@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
 
-function GroupChat({ group, setGroup ,user}) {
-
+function GroupChat({ group, setGroup, user }) {
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
     apiUrl = 'https://learnow-be.herokuapp.com';
   }
-
 
   const [socket, setSocket] = useState(io.connect(apiUrl));
   const [msgsArray, setMsgsArray] = useState([]);
@@ -25,7 +23,7 @@ function GroupChat({ group, setGroup ,user}) {
     setMsgsArray([...msgsArray, msg]);
   });
 
-  console.log(group);
+  console.log(user);
   return (
     <div>
       <div className='groupchat-nav'>
@@ -44,7 +42,13 @@ function GroupChat({ group, setGroup ,user}) {
           <div className='message-box'>
             <ul className='messages'>
               {msgsArray.map(message => (
-                <li>{message}</li>
+                <li className='message-listing'>
+                  <img src={user.picture} className='mini-user-pic' />
+                  <div className='sent-msg-container'>
+                    <h4>{user.nickname}</h4>
+                    <span className='sent-msg'>{message.split(':')[1]}</span>
+                  </div>
+                </li>
               ))}
             </ul>
             <form className='chat-from' onSubmit={sendMsg}>

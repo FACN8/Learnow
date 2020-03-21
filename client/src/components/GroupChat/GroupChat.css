@@ -28,6 +28,7 @@
 }
 .messages li {
   padding: 5px 10px;
+  display: flex;
 }
 .messages li:nth-child(odd) {
   background: rgb(68, 61, 61);
@@ -82,3 +83,15 @@
   text-align: center;
   flex-grow: 1;
 }
+
+.mini-user-pic{
+  width: 44px;
+  height: 44px;
+}
+
+.sent-msg-container{
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+

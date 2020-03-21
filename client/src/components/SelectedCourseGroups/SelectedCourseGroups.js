@@ -78,7 +78,6 @@ function SelectedCourseGroups({ state, setState }) {
     updateData();
   }, [creating]);
 
-
   if(group){
     return <GroupChat user={user} group={group} setGroup={setGroup}/>
   }
