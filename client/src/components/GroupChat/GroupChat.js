@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
-function GroupChat({ group, setGroup }) {
+
+function GroupChat({ group, setGroup ,user}) {
+
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
     apiUrl = 'https://learnow-be.herokuapp.com';
   }
+
+
   const [socket, setSocket] = useState(io.connect(apiUrl));
   const [msgsArray, setMsgsArray] = useState([]);
   useEffect(() => {
-    socket.emit('user connected', 'Aysam1');
+    socket.emit('user connected', user.nickname);
   }, []);
 
   const sendMsg = e => {

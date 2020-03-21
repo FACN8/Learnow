@@ -10,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import axiosGet from '../../utils/axiosGet.js';
+import { useAuth0 } from '../../react-auth0-spa';
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -34,11 +36,21 @@ function SelectedCourseGroups({ state, setState }) {
   const [tileData, setTileData] = useState([]);
   const [columns, setColumns] = useState(Math.floor(window.innerWidth / 350));
   const [group, setGroup] = useState(null);
+  const {user,isAuthenticated,loginWithPopup} = useAuth0();
+  const [err,setErr] = useState(null);
   window.addEventListener('resize', () =>
     setColumns(Math.floor(window.innerWidth / 350)),
   );
 
   const switchCreating = () => setCreating(creating => !creating);
+
+  const joinChat = (tile) =>{
+    if(!isAuthenticated){
+      loginWithPopup();
+    }else{
+      setGroup(tile);
+    }
+  }
 
   const updateData = () => {
     axiosGet(`/groups/get/courseid=${state.selectedCourse.id}`)
@@ -68,7 +80,7 @@ function SelectedCourseGroups({ state, setState }) {
 
 
   if(group){
-    return <GroupChat group={group} setGroup={setGroup}/>
+    return <GroupChat user={user} group={group} setGroup={setGroup}/>
   }
 
   if (reqErr) {
@@ -118,7 +130,7 @@ function SelectedCourseGroups({ state, setState }) {
                   <IconButton
                     aria-label={`info about ${tile.name}`}
                     className={classes.icon}
-                    onClick={()=>setGroup(tile)}
+                    onClick={()=>joinChat(tile)}
                   >
                     <QuestionAnswerIcon htmlColor='#f5f6f8' />
                   </IconButton>

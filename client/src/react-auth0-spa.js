@@ -47,8 +47,6 @@ export const Auth0Provider = ({
   useEffect(() => {
     if (!loading && user) {
       const id = user.sub.split('|')[1];
-      console.log(id);
-      console.log(user.nickname);
       axiosPost(`/users/add`, {
         id,
         username: user.nickname,
