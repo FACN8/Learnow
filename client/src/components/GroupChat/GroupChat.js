@@ -30,8 +30,10 @@ function GroupChat({ group, setGroup, user }) {
 
   const sendMsg = e => {
     e.preventDefault();
-    socket.emit('chat message', e.target.msg.value);
+    let msg = e.target.msg.value.trim();
     e.target.msg.value = '';
+    if(!msg.length) return;
+    socket.emit('chat message', msg);
   };
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
