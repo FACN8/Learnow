@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
-function GroupChat() {
+function GroupChat({ group, setGroup }) {
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
     apiUrl = 'https://learnow-be.herokuapp.com';
@@ -20,9 +20,20 @@ function GroupChat() {
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
   });
+
+  console.log(group);
   return (
     <div>
-      <div className='groupchat-nav'>nav</div>
+      <div className='groupchat-nav'>
+        <span className='back-to-groups' onClick={() => setGroup(null)}>
+          ⟵ Back to groups
+        </span>
+        <div className='groupname-container'>
+          <span className='chat-groupname' onClick={() => setGroup(null)}>
+            {group.name}
+          </span>
+        </div>
+      </div>
       <div className='chat-container'>
         <div className='users-and-msgs-container'>
           <ul className='users-container'></ul>

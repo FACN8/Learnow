@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './SelectedCourseGroups.css';
-import { Link } from 'react-router-dom';
-
+import GroupChat from '../GroupChat/GroupChat';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import axiosGet from '../../utils/axiosGet.js';
@@ -35,7 +33,7 @@ function SelectedCourseGroups({ state, setState }) {
   const [reqErr, setReqErr] = useState(false);
   const [tileData, setTileData] = useState([]);
   const [columns, setColumns] = useState(Math.floor(window.innerWidth / 350));
-  const [selectGroup, setGroup] = useState({});
+  const [group, setGroup] = useState(null);
   window.addEventListener('resize', () =>
     setColumns(Math.floor(window.innerWidth / 350)),
   );
@@ -49,8 +47,8 @@ function SelectedCourseGroups({ state, setState }) {
           res.data.map(group => ({
             id: group.id,
             img: '/res/group-logo.jpg',
-            title: group.name,
-            author: group.creator_name,
+            name: group.name,
+            creator: group.creator_name,
             description: group.description,
             activity: group.updated_at,
           })),
@@ -68,6 +66,10 @@ function SelectedCourseGroups({ state, setState }) {
     updateData();
   }, [creating]);
 
+
+  if(group){
+    return <GroupChat group={group} setGroup={setGroup}/>
+  }
 
   if (reqErr) {
     return <span>{reqErr}</span>;
@@ -95,26 +97,26 @@ function SelectedCourseGroups({ state, setState }) {
         <GridList
           cols={columns}
           spacing={30}
-          cellHeight={'30vh'}
+          cellHeight={420}
           className={classes.gridList}
         >
           {tileData.map(tile => (
             <GridListTile key={tile.id}>
-                <img className='group-img' src={tile.img} alt={tile.title} />
+                <img className='group-img' src={tile.img} alt={tile.name} />
               <ListSubheader>
                 {
                   <div>
-                    <h2 className='group-title'>{tile.title}</h2>
+                    <h2 className='group-name'>{tile.name}</h2>
                     <p className='group-desc'>{tile.description}</p>
                   </div>
                 }
               </ListSubheader>
               <GridListTileBar
-                title={`Latest activity ${tile.activity}`}
-                subtitle={<span>by: {tile.author}</span>}
+                name={`Latest activity ${tile.activity}`}
+                subtitle={<span>by: {tile.creator}</span>}
                 actionIcon={
                   <IconButton
-                    aria-label={`info about ${tile.title}`}
+                    aria-label={`info about ${tile.name}`}
                     className={classes.icon}
                     onClick={()=>setGroup(tile)}
                   >
