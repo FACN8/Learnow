@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './SelectedCourseGroups.css';
-import { Link } from 'react-router-dom';
-
+import GroupChat from '../GroupChat/GroupChat';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import axiosGet from '../../utils/axiosGet.js';
+import { useAuth0 } from '../../react-auth0-spa';
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -33,11 +34,23 @@ function SelectedCourseGroups({ state, setState }) {
   const [loading, setLoading] = useState(true);
   const [reqErr, setReqErr] = useState(false);
   const [tileData, setTileData] = useState([]);
-  const [columns,setColumns] = useState(Math.floor(window.innerWidth/350));
-
-  window.addEventListener('resize',()=>setColumns(Math.floor(window.innerWidth/350)));
+  const [columns, setColumns] = useState(Math.floor(window.innerWidth / 350));
+  const [group, setGroup] = useState(null);
+  const {user,isAuthenticated,loginWithPopup} = useAuth0();
+  const [err,setErr] = useState(null);
+  window.addEventListener('resize', () =>
+    setColumns(Math.floor(window.innerWidth / 350)),
+  );
 
   const switchCreating = () => setCreating(creating => !creating);
+
+  const joinChat = (tile) =>{
+    if(!isAuthenticated){
+      loginWithPopup();
+    }else{
+      setGroup(tile);
+    }
+  }
 
   const updateData = () => {
     axiosGet(`/groups/get/courseid=${state.selectedCourse.id}`)
@@ -46,8 +59,8 @@ function SelectedCourseGroups({ state, setState }) {
           res.data.map(group => ({
             id: group.id,
             img: '/res/group-logo.jpg',
-            title: group.name,
-            author: group.creator_name,
+            name: group.name,
+            creator: group.creator_name,
             description: group.description,
             activity: group.updated_at,
           })),
@@ -60,20 +73,23 @@ function SelectedCourseGroups({ state, setState }) {
   useEffect(() => {
     updateData();
   }, []);
+  
   useEffect(() => {
     updateData();
   }, [creating]);
 
-  console.log('The tile data is');
-  console.log(tileData);
-  console.log(`error is:${reqErr}`);
+  if(group){
+    return <GroupChat user={user} group={group} setGroup={setGroup}/>
+  }
 
   if (reqErr) {
     return <span>{reqErr}</span>;
   }
+
   if (loading) {
     return <span>Loading groups . . . </span>;
   }
+
   return (
     <div className='groups-container-bg'>
       <button onClick={switchCreating} className='createGroup grow'>
@@ -92,29 +108,30 @@ function SelectedCourseGroups({ state, setState }) {
         <GridList
           cols={columns}
           spacing={30}
-          cellHeight={500}
+          cellHeight={420}
           className={classes.gridList}
         >
           {tileData.map(tile => (
             <GridListTile key={tile.id}>
-              <Link className='img-link' to={'/GroupChat'}>
-                <img className='group-img' src={tile.img} alt={tile.title} />
-              </Link>
-              <ListSubheader>{
-                <div>
-                <h2 className='group-title'>{tile.title}</h2>
-                <p className='group-desc'>{tile.description}</p>
-                </div>
-                }</ListSubheader>
+                <img className='group-img' src={tile.img} alt={tile.name} />
+              <ListSubheader>
+                {
+                  <div>
+                    <h2 className='group-name'>{tile.name}</h2>
+                    <p className='group-desc'>{tile.description}</p>
+                  </div>
+                }
+              </ListSubheader>
               <GridListTileBar
-                title={`Latest activity ${tile.activity}`}
-                subtitle={<span>by: {tile.author}</span>}
+                name={`Latest activity ${tile.activity}`}
+                subtitle={<span>by: {tile.creator}</span>}
                 actionIcon={
                   <IconButton
-                    aria-label={`info about ${tile.title}`}
+                    aria-label={`info about ${tile.name}`}
                     className={classes.icon}
+                    onClick={()=>joinChat(tile)}
                   >
-                    <InfoIcon />
+                    <QuestionAnswerIcon htmlColor='#f5f6f8' />
                   </IconButton>
                 }
               />
