@@ -11,6 +11,7 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import RequestLogin from '../RequestLogin/RequestLogin';
 import axiosGet from '../../utils/axiosGet.js';
+import axiosPost from '../../utils/axiosPost';
 import { useAuth0 } from '../../react-auth0-spa';
 
 const useStyles = makeStyles(theme => ({
@@ -39,6 +40,7 @@ function SelectedCourseGroups({ state, setState }) {
   const [group, setGroup] = useState(null);
   const { user, isAuthenticated, loginWithPopup } = useAuth0();
   const [err, setErr] = useState(null);
+
   window.addEventListener('resize', () =>
     setColumns(Math.floor(window.innerWidth / 350)),
   );
@@ -50,6 +52,12 @@ function SelectedCourseGroups({ state, setState }) {
       loginWithPopup();
     } else {
       setGroup(tile);
+      axiosPost('/groups/join', {
+        groupId: tile.id,
+        userId: user.sub.split('|')[1],
+      })
+        .then(console.log)
+        .catch(console.log);
     }
   };
 
@@ -91,19 +99,18 @@ function SelectedCourseGroups({ state, setState }) {
     return <span>Loading groups . . . </span>;
   }
   return (
-
     <div className='groups-container-bg'>
-      {tileData.length===0 && (
-            <div style={{'marginLeft':'1.2rem','paddingBottom':'1rem'}}>
-              <h3 className='group-title'>No groups exist for this course yet</h3>
-              <span className='group-desc'>Feel free to start you own!</span>
-            </div>
-          )}
+      {tileData.length === 0 && (
+        <div style={{ marginLeft: '1.2rem', paddingBottom: '1rem' }}>
+          <h3 className='group-title'>No groups exist for this course yet</h3>
+          <span className='group-desc'>Feel free to start you own!</span>
+        </div>
+      )}
       <button onClick={switchCreating} className='createGroup grow'>
         Create group
       </button>
-      
-      {creating && isAuthenticated &&(
+
+      {creating && isAuthenticated && (
         <div className='form-container'>
           <CreateGroup
             courseId={state.selectedCourse.id}
@@ -111,9 +118,7 @@ function SelectedCourseGroups({ state, setState }) {
           />
         </div>
       )}
-       {creating && !isAuthenticated &&(
-        <RequestLogin/>
-      )}
+      {creating && !isAuthenticated && <RequestLogin />}
 
       <div className={classes.root}>
         <GridList
