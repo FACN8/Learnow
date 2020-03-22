@@ -14,7 +14,7 @@ router.get('/get/:groupId', (req, res) => {
   const { groupId } = req.params;
   getMessages(groupId, (err, result) => {
     if (err) res.send(500, `Failed to get messages, error : ${err}`);
-    else res.json(201, result.rows);
+    else res.json(200, result.rows);
   });
 });
 

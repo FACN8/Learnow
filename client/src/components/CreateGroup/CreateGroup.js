@@ -72,7 +72,7 @@ const CreateGroup = ({ courseId ,setCreating }) => {
           type='submit'
           value='Close'
         >
-          Close
+          Close & Update
         </button>
       </div>
     );

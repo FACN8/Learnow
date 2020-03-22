@@ -17,7 +17,7 @@ io.on("connection", socket => {
     io.emit("update connected users", connectedUsers);
 
     socket.on("chat message", function(msg) {
-      io.emit("chat message", userName + " :" + msg);
+      io.emit("chat message",msg);
     });
   });
 

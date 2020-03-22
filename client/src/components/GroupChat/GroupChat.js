@@ -1,29 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
+import axiosPost from '../../utils/axiosPost';
+import UsersList from '../UsersList/UsersList';
+import MessagesList from '../MessagesList/MessagesList';
 
 function GroupChat({ group, setGroup, user }) {
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
     apiUrl = 'https://learnow-be.herokuapp.com';
   }
-
+  const id = user.sub.split('|')[1];
   const [socket, setSocket] = useState(io.connect(apiUrl));
   const [msgsArray, setMsgsArray] = useState([]);
+
   useEffect(() => {
     socket.emit('user connected', user.nickname);
   }, []);
 
+  const emitMsg = msg => {
+    socket.emit('chat message', {
+      userName: user.nickname,
+      picture: user.picture,
+      message: msg,
+    });
+
+    axiosPost('/messages/add', {
+      userId: id,
+      groupId: group.id,
+      userName: user.nickname,
+      message: msg,
+    })
+      .then(console.log)
+      .catch(console.log);
+  };
+
   const sendMsg = e => {
     e.preventDefault();
-    socket.emit('chat message', e.target.msg.value);
+    let msg = e.target.msg.value.trim();
     e.target.msg.value = '';
+    if (!msg.length) return;
+    else {
+      emitMsg(msg);
+    }
   };
+
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
   });
 
-  console.log(user);
   return (
     <div>
       <div className='groupchat-nav'>
@@ -38,19 +63,14 @@ function GroupChat({ group, setGroup, user }) {
       </div>
       <div className='chat-container'>
         <div className='users-and-msgs-container'>
-          <ul className='users-container'></ul>
+          <UsersList socket={socket} groupId={group.id} />
+
           <div className='message-box'>
-            <ul className='messages'>
-              {msgsArray.map(message => (
-                <li className='message-listing'>
-                  <img src={user.picture} className='mini-user-pic' />
-                  <div className='sent-msg-container'>
-                    <h4>{user.nickname}</h4>
-                    <span className='sent-msg'>{message.split(':')[1]}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <MessagesList
+              groupId={group.id}
+              msgsArray={msgsArray}
+              setMsgsArray={setMsgsArray}
+            />
             <form className='chat-from' onSubmit={sendMsg}>
               <label className='input-label' htmlFor='msg'>
                 <input type='text' name='msg' id='m' autoComplete='off' />

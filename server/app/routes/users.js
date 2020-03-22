@@ -3,8 +3,8 @@ const addUser = require('../../queries/addUser');
 const getGroupUsers = require('../../queries/getGroupUsers');
 
 router.post('/add', (req, res) => {
-  const { id, username } = req.body;
-  addUser(id, username, (err, result) => {
+  const { id, username, picture } = req.body;
+  addUser(id, username, picture, (err, result) => {
     if (err) res.send(500, `Failed to add user, error : ${err}`);
     else res.send(201, `${username} is added`);
   });
