@@ -13,20 +13,21 @@ function GroupChat({ group, setGroup, user }) {
   }
   const id = user.sub.split('|')[1];
   const [socket, setSocket] = useState(io.connect(apiUrl));
-  const [msgsArray,setMsgsArray] = useState([]);
+  const [msgsArray, setMsgsArray] = useState([]);
 
- 
 
- 
 
   useEffect(() => {
     socket.emit('user connected', user.nickname);
   }, []);
 
   const emitMsg = msg => {
-    
-    socket.emit('chat message', {userName:user.nickname,picture:user.picture,message:msg});
-    
+    socket.emit('chat message', {
+      userName: user.nickname,
+      picture: user.picture,
+      message: msg,
+    });
+
     axiosPost('/messages/add', {
       userId: id,
       groupId: group.id,
@@ -46,10 +47,12 @@ function GroupChat({ group, setGroup, user }) {
       emitMsg(msg);
     }
   };
+
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
   });
 
+ 
   return (
     <div>
       <div className='groupchat-nav'>
@@ -64,10 +67,14 @@ function GroupChat({ group, setGroup, user }) {
       </div>
       <div className='chat-container'>
         <div className='users-and-msgs-container'>
-            <UsersList groupId={group.id} />
-          
+          <UsersList socket={socket} groupId={group.id} />
+
           <div className='message-box'>
-           <MessagesList groupId={group.id} msgsArray={msgsArray} setMsgsArray={setMsgsArray}/>
+            <MessagesList
+              groupId={group.id}
+              msgsArray={msgsArray}
+              setMsgsArray={setMsgsArray}
+            />
             <form className='chat-from' onSubmit={sendMsg}>
               <label className='input-label' htmlFor='msg'>
                 <input type='text' name='msg' id='m' autoComplete='off' />

@@ -34,7 +34,7 @@ const MessagesList = ({ groupId, msgsArray, setMsgsArray }) => {
   return (
     <ul className='messages'>
     {msgsArray.map(msgData => (
-      <li className='message-listing'>
+      <li key={msgData.id} className='message-listing'>
         <img src={msgData.picture} className='mini-user-pic' />
         <div className='sent-msg-container'>
           <h4>{msgData.userName}</h4>
