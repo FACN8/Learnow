@@ -11,7 +11,7 @@ const UsersList = ({ groupId, socket }) => {
   });
 
   useEffect(() => {
-    if (connectedUsers.length && usersArray.length) {
+    if (connectedUsers && usersArray) {
       usersArray.sort(curr => {
         return connectedUsers.includes(curr) ? 1 : -1;
       });
@@ -38,7 +38,7 @@ const UsersList = ({ groupId, socket }) => {
     getUsers();
   }, []);
 
-  if (!usersArray.length) return <span>Loading users...</span>;
+  if (!usersArray ||!usersArray.length) return <span>Loading users...</span>;
 
   return (
     <ul className='users-list'>
