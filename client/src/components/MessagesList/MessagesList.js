@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosGet from '../../utils/axiosGet';
 
-const MessagesList = ({ groupId, msgsArray, setMsgsArray }) => {
+const MessagesList = ({ groupId, msgsArray, setMsgsArray, socket }) => {
   const getMessages = () => {
     axiosGet(`/messages/get/${groupId}`)
       .then(result => {
@@ -17,6 +17,11 @@ const MessagesList = ({ groupId, msgsArray, setMsgsArray }) => {
       .catch(console.log);
   };
 
+  socket.on('chat message', function(msg) {
+    setMsgsArray([...msgsArray, msg]);
+  });
+
+
   useEffect(() => {
     getMessages();
   }, []);
@@ -28,6 +33,8 @@ const MessagesList = ({ groupId, msgsArray, setMsgsArray }) => {
         </li>
       </ul>
     );
+
+  
 
   return (
     <ul className='messages'>

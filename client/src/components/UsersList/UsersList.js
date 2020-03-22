@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axiosGet from '../../utils/axiosGet';
 import './UsersList.css';
 
-const UsersList = ({ groupId, socket }) => {
+const UsersList = ({ groupId, socket, connectedUsers, setConnectedUsers}) => {
   const [usersArray, setUsersArray] = useState([]);
-  const [connectedUsers, setConnectedUsers] = useState([]);
 
   socket.on('update connected users', users => {
-    setConnectedUsers(...users);
+    setConnectedUsers([...users]);
   });
 
   useEffect(() => {
