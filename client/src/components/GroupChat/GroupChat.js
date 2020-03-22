@@ -12,28 +12,28 @@ function GroupChat({ group, setGroup, user }) {
   const [msgsArray, setMsgsArray] = useState([]);
   const [usersArray, setUsersArray] = useState([]);
 
-  const getUsers = ()=>{
+  const getUsers = () => {
     axiosGet(`/users/get/groupid=${group.id}`)
-    .then(res=>{
-      setUsersArray(res.data);
-      console.log(res.data);
-    })
-    .catch(err=>setUsersArray(['Could not fetch users!']))
-  }
-
+      .then(res => {
+        setUsersArray(res.data);
+        console.log(res.data);
+      })
+      .catch(err => setUsersArray(['Could not fetch users!']));
+  };
 
   useEffect(() => {
     socket.emit('user connected', user.nickname);
     getUsers();
   }, []);
 
+  const emitMsg = msg => socket.emit('chat message', msg);
 
   const sendMsg = e => {
     e.preventDefault();
     let msg = e.target.msg.value.trim();
     e.target.msg.value = '';
-    if(!msg.length) return;
-    socket.emit('chat message', msg);
+    if (!msg.length) return;
+    else emitMsg(msg);
   };
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
@@ -54,12 +54,12 @@ function GroupChat({ group, setGroup, user }) {
       <div className='chat-container'>
         <div className='users-and-msgs-container'>
           <ul className='users-container'>
-          {usersArray.map(user => (
-                <li className='user-listing'>
-                  <img src={user.picture} className='mini-user-pic' />
-                    <h3 className='user-in-list'>{user.user_name}</h3>
-                </li>
-              ))}
+            {usersArray.map(user => (
+              <li className='user-listing'>
+                <img src={user.picture} className='mini-user-pic' />
+                <h3 className='user-in-list'>{user.user_name}</h3>
+              </li>
+            ))}
           </ul>
           <div className='message-box'>
             <ul className='messages'>

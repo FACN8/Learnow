@@ -20,6 +20,7 @@ create table users (
 	id VARCHAR(50) PRIMARY KEY,
 	user_name VARCHAR(30),
 	total_groups integer,
+	picture VARCHAR(350),
 	UNIQUE(id)
 );
 
