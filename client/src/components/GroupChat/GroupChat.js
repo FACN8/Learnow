@@ -2,38 +2,49 @@ import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
 import axiosGet from '../../utils/axiosGet';
+import axiosPost from '../../utils/axiosPost';
+import UsersList from '../UsersList/UsersList';
+import MessagesList from '../MessagesList/MessagesList';
+
 function GroupChat({ group, setGroup, user }) {
   let apiUrl = 'http://localhost:5000';
   if (process.env.NODE_ENV === 'production') {
     apiUrl = 'https://learnow-be.herokuapp.com';
   }
-
+  const id = user.sub.split('|')[1];
   const [socket, setSocket] = useState(io.connect(apiUrl));
-  const [msgsArray, setMsgsArray] = useState([]);
-  const [usersArray, setUsersArray] = useState([]);
+  const [msgsArray,setMsgsArray] = useState([]);
 
-  const getUsers = () => {
-    axiosGet(`/users/get/groupid=${group.id}`)
-      .then(res => {
-        setUsersArray(res.data);
-        console.log(res.data);
-      })
-      .catch(err => setUsersArray(['Could not fetch users!']));
-  };
+ 
+
+ 
 
   useEffect(() => {
     socket.emit('user connected', user.nickname);
-    getUsers();
   }, []);
 
-  const emitMsg = msg => socket.emit('chat message', msg);
+  const emitMsg = msg => {
+    
+    socket.emit('chat message', {userName:user.nickname,picture:user.picture,message:msg});
+    
+    axiosPost('/messages/add', {
+      userId: id,
+      groupId: group.id,
+      userName: user.nickname,
+      message: msg,
+    })
+      .then(console.log)
+      .catch(console.log);
+  };
 
   const sendMsg = e => {
     e.preventDefault();
     let msg = e.target.msg.value.trim();
     e.target.msg.value = '';
     if (!msg.length) return;
-    else emitMsg(msg);
+    else {
+      emitMsg(msg);
+    }
   };
   socket.on('chat message', function(msg) {
     setMsgsArray([...msgsArray, msg]);
@@ -53,26 +64,10 @@ function GroupChat({ group, setGroup, user }) {
       </div>
       <div className='chat-container'>
         <div className='users-and-msgs-container'>
-          <ul className='users-container'>
-            {usersArray.map(user => (
-              <li className='user-listing'>
-                <img src={user.picture} className='mini-user-pic' />
-                <h3 className='user-in-list'>{user.user_name}</h3>
-              </li>
-            ))}
-          </ul>
+            <UsersList groupId={group.id} />
+          
           <div className='message-box'>
-            <ul className='messages'>
-              {msgsArray.map(message => (
-                <li className='message-listing'>
-                  <img src={user.picture} className='mini-user-pic' />
-                  <div className='sent-msg-container'>
-                    <h4>{user.nickname}</h4>
-                    <span className='sent-msg'>{message.split(':')[1]}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+           <MessagesList groupId={group.id} msgsArray={msgsArray} setMsgsArray={setMsgsArray}/>
             <form className='chat-from' onSubmit={sendMsg}>
               <label className='input-label' htmlFor='msg'>
                 <input type='text' name='msg' id='m' autoComplete='off' />

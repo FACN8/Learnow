@@ -90,7 +90,6 @@ function SelectedCourseGroups({ state, setState }) {
   if (loading) {
     return <span>Loading groups . . . </span>;
   }
-console.log(tileData);
   return (
 
     <div className='groups-container-bg'>
