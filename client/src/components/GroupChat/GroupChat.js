@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './GroupChat.css';
 import io from 'socket.io-client';
-import axiosGet from '../../utils/axiosGet';
 import axiosPost from '../../utils/axiosPost';
 import UsersList from '../UsersList/UsersList';
 import MessagesList from '../MessagesList/MessagesList';
@@ -14,8 +13,6 @@ function GroupChat({ group, setGroup, user }) {
   const id = user.sub.split('|')[1];
   const [socket, setSocket] = useState(io.connect(apiUrl));
   const [msgsArray, setMsgsArray] = useState([]);
-
-
 
   useEffect(() => {
     socket.emit('user connected', user.nickname);
@@ -52,7 +49,6 @@ function GroupChat({ group, setGroup, user }) {
     setMsgsArray([...msgsArray, msg]);
   });
 
- 
   return (
     <div>
       <div className='groupchat-nav'>

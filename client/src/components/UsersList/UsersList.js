@@ -5,18 +5,18 @@ import './UsersList.css';
 const UsersList = ({ groupId, socket }) => {
   const [usersArray, setUsersArray] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
-  
+
   socket.on('update connected users', users => {
     setConnectedUsers(...users);
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     if (connectedUsers.length && usersArray.length) {
       usersArray.sort(curr => {
-         return connectedUsers.includes(curr) ? 1 : -1;
-       });
-     }
-  },[connectedUsers])
+        return connectedUsers.includes(curr) ? 1 : -1;
+      });
+    }
+  }, [connectedUsers]);
 
   const status = userName => {
     let classes = 'status';
